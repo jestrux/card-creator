@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+
+		<!-- <link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Parisienne&display=swap"
+			rel="stylesheet"
+		/> -->
+
+		<!-- <script src="https://cdn.tailwindcss.com"></script> -->
+		<script src="scripts/tailwind-cdn.js"></script>
+		<script>
+			window.tailwind.config = {
+				theme: {
+					extend: {
+						colors: {
+							primary:
+								"rgb(var(--primary-color) / <alpha-value>)",
+						},
+					},
+				},
+			};
+		</script>
+	</head>
+	<body>
+		<style>
+			:root {
+				--primary-color: 149 184 93;
+				--border-gradient-from: #b3b85d;
+				--border-gradient-to: #226271;
+				/* --gradient-from: #abb85d;
+				--gradient-to: #6e8b3b; */
+				--gradient-from: #95b85d;
+				--gradient-to: #749d45;
+				/* --gradient-from: gold;
+				--gradient-to: red; */
+			}
+
+			@font-face {
+				font-family: "Great Vibes";
+				src: url(fonts/Great_Vibes/GreatVibes-Regular.ttf);
+			}
+
+			.great {
+				font-family: "Great Vibes", sans-serif;
+			}
+
+			.paris {
+				font-family: "Parisienne", cursive;
+			}
+
+			#couple {
+				/* -webkit-mask-image: -webkit-gradient(
+					linear,
+					center top,
+					center bottom,
+					color-stop(0, rgba(0, 0, 0, 1)),
+					color-stop(0.35, rgba(0, 0, 0, 1)),
+					color-stop(0.65, rgba(0, 0, 0, 0.05)),
+					color-stop(0.75, rgba(0, 0, 0, 0)),
+					color-stop(1, rgba(0, 0, 0, 0))
+				); */
+			}
+
+			.text-primary {
+				/* color: #510216; */
+				color: rgb(83, 105, 45);
+			}
+
+			.mont,
+			.mont * {
+				font-family: "Open Sans", "Helvetica Neue", sans-serif;
+			}
+
+			input[type="search"] {
+				width: 100%;
+				border: 1px solid #ddd;
+				border-radius: 8px;
+			}
+
+			input[type="search"]::placeholder {
+				color: rgba(0, 0, 0, 0.4);
+			}
+		</style>
+
+		<div class="grid grid-cols-12 gap-6 items-start p-8" x-data="cards()">
+			<div
+				class="col-span-3 sticky top-10 bg-white shadow-sm isolate z-20 border rounded-lg overflow-hidden"
+			>
+				<!-- <h2 class="text-2xl/none font-bold mb-6">Card Creator</h2> -->
+				<div class="px-4 pt-3 pb-5 space-y-4 relative">
+					<div class="absolute top-0 inset-x-0 h-3 overflow-hidden">
+						<img class="w-full" src="img/palette.jpeg" alt="" />
+					</div>
+
+					<div>
+						<label class="opacity-70">Search attendees: </label>
+						<input
+							type="search"
+							placeholder="Type to search..."
+							x-model="searchQuery"
+						/>
+					</div>
+
+					<div class="pb-1">
+						<label class="opacity-70">Filter by type:</label>
+						<div
+							class="mt-px inline-flex items-center rounded overflow-hidden border divide-x divide-black/20 border-black/20"
+							x-data="{filters: ['Single', 'Double']}"
+						>
+							<label
+								class="h-8 px-4 cursor-pointer text-xs font-medium tracking-wide flex items-center uppercase border-l"
+								x-bind:class="!typeFilter ? 'bg-primary text-white !border-primary' : 'text-black/50'"
+								x-on:click="typeFilter = ''"
+							>
+								All
+							</label>
+							<template x-for="filter in filters">
+								<label
+									class="h-8 px-4 cursor-pointer text-xs font-medium tracking-wide flex items-center uppercase border-l"
+									x-text="filter"
+									x-bind:class="typeFilter == filter ? 'bg-primary text-white !border-primary' : 'text-black/50'"
+									x-on:click="typeFilter = filter"
+								>
+								</label>
+							</template>
+						</div>
+					</div>
+
+					<button
+						onclick="downloadCards()"
+						class="w-full pdf-report-downloader focus:outline-none flex items-center justify-center px-6 h-10 uppercase text-sm tracking-wide font-semibold bg-primary text-white rounded-full"
+						data-component-field="{id: 'action'}"
+					>
+						<svg
+							class="mr-2 size-5"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+							></path>
+						</svg>
+
+						Download Cards
+					</button>
+				</div>
+			</div>
+
+			<div id="reportWrapper" class="col-span-9">
+				<div class="grid grid-cols-3">
+					<template x-for="user in users">
+						<div class="card-item" x-data="card()">
+							<div
+								class="relative rounded-xl overflow-hidden"
+								style="
+									width: 375px;
+									height: 667px;
+									padding: 0.35rem;
+									background: linear-gradient(
+										120deg,
+										var(--border-gradient-from) 0%,
+										var(--border-gradient-to) 100%
+									);
+								"
+							>
+								<div
+									class="bg-white h-full rounded-lg text-primary"
+								>
+									<div class="absolute inset-x-0 z-10">
+										<div
+											class="relative -mt-[95px] scale-[1.1]"
+										>
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												viewBox="0 0 860.683 617.967"
+												fill="currentColor"
+											>
+												<defs>
+													<linearGradient
+														id="fillGradient"
+														gradientTransform="rotate(90)"
+													>
+														<stop
+															offset="5%"
+															style="
+																stop-color: var(
+																	--gradient-from
+																);
+															"
+														/>
+														<!-- stop-color="gold" -->
+														<!-- stop-color="red" -->
+														<stop
+															offset="95%"
+															style="
+																stop-color: var(
+																	--gradient-to
+																);
+															"
+														/>
+													</linearGradient>
+												</defs>
+
+												<path
+													fill="url(#fillGradient)"
+													d="M 860.683 69.286 C 812.716 44.077 854.974 425.877 835.944 498.995 C 816.914 571.109 740.794 625.195 671.684 617.182 C 601.573 609.169 537.472 540.06 415.284 500.998 C 294.087 461.936 114.804 451.92 59.716 379.806 C 3.627 306.69 -40.442 89.298 59.716 21.191 C 160.877 -47.923 862.151 74.612 860.683 69.286 Z"
+												/>
+											</svg>
+
+											<div
+											class="absolute inset-0 -bottom-16 invert opacity-10 sopacity-[0.03] rounded-full"
+											style="
+												rotate: 14deg;
+												left: -10px;
+												right: -60px;
+												top: -160px;
+												background-size: 150px;
+												background-image: url('img/waves.png');
+											"
+										></div>
+
+											<!-- <div
+												class="absolute inset-0 bg-cover sgrayscale"
+												style="
+													background-image: url('img/wedders.png');
+													mix-blend-mode: luminosity;
+												"
+											></div> -->
+										</div>
+									</div>
+
+									<div class="z-10 relative">
+
+										<div
+											class="relative flex py-1 items-center justify-between px-8 text-white tracking-widest"
+										>
+											<h5
+												class="relative mt-2 text-4xl text-centers great font-bold leading-tight"
+												style="letter-spacing: 0.1em"
+											>
+												<span class="great -ml-3">
+													Gilbert
+												</span>
+												<br />
+												<span
+													class="absolute mt-2 text-xs uppercase font-mono"
+												>
+													Weds
+												</span>
+												<span class="ml-12 great">
+													Tausi
+												</span>
+											</h5>
+
+											<div
+												class="absolute top-6 -bottom-8 flex flex-col items-end justify-between right-4 text-right"
+											>
+												<span
+													class="shidden text-sm font-bold uppercase tracking-wide"
+												>
+													28th September
+												</span>
+
+												<span
+													class="shidden text-sm font-light uppercases tracking-wide"
+												>
+													PROV 18:22
+												</span>
+											</div>
+										</div>
+									</div>
+
+									<div
+										class="absolute flex items-center top-0 left-0 ml-6 mt-[7.6rem] transform rotate-1"
+									>
+										<div class="mt-2">
+											<div id="qr"></div>
+										</div>
+
+										<div
+											class="mt-1 ml-3 text-black font-light text-[13px] flex flex-col gap-1.5"
+										>
+											<span>Smart Card</span>
+											<span
+												id="code"
+												class="font-semibold text-primary text-base/none tracking-widest"
+												x-text="user.code"
+											></span>
+										</div>
+									</div>
+
+									<div
+										class="pt-1 mt-24 px-4 text-center text-black text-opacity-75 leading-loose font-serif text-sm"
+									>
+										Dear
+										<span
+											class="font-serif mt-1 text- text-black font-medium"
+										>
+											<span x-show="user.title">
+												&nbsp;
+											</span>
+											<span
+												class="font-serif font-medium"
+												x-text="user.name"
+											>
+											</span
+											>,
+										</span>
+										the family of Mr. & Mrs. Sylvester
+										Chando warmly invites you to come
+										celebrate with us on this joyous
+										occassion.
+									</div>
+
+									<img
+										class="mt-3 mb-2 w-40 mx-auto block"
+										src="img/wed-divider.svg"
+										alt=""
+									/>
+
+									<div
+										class="text-black bg-white mt-4 rounded-mds overflow-hidden"
+										styles="color: #41274a"
+									>
+										<div
+											class="bg-primary/[0.1] relative flex items-center text-primary"
+										>
+											<div
+												class="text-center overflow-hidde absolute left-0 inset-y-0 flex flex-col justify-center items-center"
+												style="width: 93px"
+											>
+												<svg
+													class="absolute text-primary/20"
+													fill="currentColor"
+													viewBox="0 0 200 200"
+													xmlns="http://www.w3.org/2000/svg"
+													style="
+														width: 350px;
+														left: -140px;
+														transform: rotate(
+															190deg
+														);
+													"
+												>
+													<path
+														d="M31.3,-46.7C32.7,-42.1,20.6,-22.4,19.5,-10C18.5,2.4,28.5,7.5,28.7,10C28.8,12.6,19.1,12.7,12.6,25.8C6.2,38.8,3.1,64.9,-7.4,75.2C-18,85.4,-36,79.8,-44.4,67.4C-52.8,55,-51.7,35.7,-47,22C-42.2,8.2,-33.8,0,-33.9,-14.5C-34,-28.9,-42.5,-49.6,-38.2,-53.2C-34,-56.9,-17,-43.6,-1,-42.2C15,-40.8,30,-51.3,31.3,-46.7Z"
+														transform="translate(100 100)"
+													/>
+												</svg>
+												<span
+													class="z-10 mt-2 leading-none great font-bold"
+													style="font-size: 65px"
+													x-text="user.type[0]"
+												></span>
+
+												<span
+													class="z-10 tracking-widest uppercase"
+													style="
+														font-family: Eudoras;
+														font-size: 14px;
+													"
+													x-text="user.type"
+												>
+												</span>
+											</div>
+
+											<div
+												class="pt-3 pb-4 flex-1 mr-4 mont text-right space-y-3"
+											>
+												<div class="-space-y-1">
+													<div
+														class="inline-flex items-center text-xs tracking-wide"
+													>
+														<span>CHURCH</span>
+														<span
+															style="
+																padding-bottom: 0.1rem;
+															"
+															class="font-bold mx-1 leading-none"
+															>&middot;</span
+														>
+														<span>
+															10AM - NOON
+														</span>
+													</div>
+													<div
+														class="text-black/70 text-[13px]/[1.13]"
+													>
+														KKKT Kibamba Kibwegere
+													</div>
+												</div>
+
+												<div class="-space-y-1">
+													<div
+														class="inline-flex items-center text-xs tracking-wide"
+													>
+														<span>RECEPTION</span>
+														<span
+															style="
+																padding-bottom: 0.1rem;
+															"
+															class="font-bold mx-1 leading-none"
+															>&middot;</span
+														>
+														<span> 1PM - 6PM </span>
+													</div>
+													<div
+														class="text-black/70 text-[13px]/[1.13]"
+													>
+														Kibamba Kibwegere<br />
+														Bwawani ( Mtaa wa Amani
+														)
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<p
+										class="mt-5 px-6 text-black/75 text-xs font-light font-serif text-center"
+									>
+										Come in party decent wear with a shade
+										of
+
+										<span
+											class="font-serif text-primary stext-white spx-0.5 font-bold"
+										>
+											olive
+										</span>
+									</p>
+
+									<div class="mt-4 mx-4">
+										<span
+											class="font-serif text-black text-xs font-medium tracking-wide"
+										>
+											RSVP CONTACTS
+										</span>
+										<div style="color: rgba(0, 0, 0, 0.6)">
+											<template
+												x-for="contact in rsvpContacts"
+											>
+												<div>
+													<span
+														class="font-serif eading-none text-xs uppercase tracking-wide"
+														x-text="contact.name"
+													>
+													</span>
+													<span
+														class="font-serif leading-none text-sm"
+													>
+														&nbsp; (
+														<span
+															x-text="contact.phone"
+														></span>
+														)
+													</span>
+												</div>
+											</template>
+										</div>
+									</div>
+
+									<div class="mt-3 ml-4 text-xs text-primary">
+										S/N: <span x-text="user.sn"></span>
+
+										<span
+											class="text-black text-xs pl-1 opacity-40"
+										>
+											smart card by
+											<span class="mt-1 font-medium">
+												@ipfsoftwares
+											</span>
+										</span>
+									</div>
+								</div>
+
+								<div class="-m">
+									<img
+										class="z-10 absolute right-0 bottom-0 w-64 -mr-32 -mb-10 object-cover"
+										src="img/flowers.webp"
+										alt=""
+									/>
+								</div>
+							</div>
+						</div>
+					</template>
+				</div>
+			</div>
+		</div>
+
+		<!-- <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.3.5/dist/alpine.min.js"></script>
+		<script src="https://www.unpkg.com/dom-to-image@2.6.0/dist/dom-to-image.min.js"></script>
+		<script src="https://www.easyproject.cn/easyqrcodejs/easy.qrcode.min.js?v=11"></script> -->
+
+		<script src="scripts/alpine.min.js" defer></script>
+		<!-- <script src="scripts/dom-to-image.min.js"></script> -->
+		<script src="scripts/easy.qrcode.min.js"></script>
+		<script src="https://www.unpkg.com/dom-to-image@2.6.0/dist/dom-to-image.min.js"></script>
+
+		<script>
+			const users = [
+				{
+					title: "",
+					name: "Elizabeth & Witson",
+					type: "Double",
+					sn: 100,
+					code: "276033",
+				},
+				{
+					title: "",
+					name: "Deborah & Beatha",
+					type: "Double",
+					sn: 101,
+					code: "106834",
+				},
+				{
+					title: "",
+					name: "Stan Kayombo",
+					type: "Single",
+					sn: 102,
+					code: "843352",
+				},
+				{
+					title: "",
+					name: "Gaudensia & Lillian",
+					type: "Double",
+					sn: 103,
+					code: "346567",
+				},
+				{
+					title: "Mr. & Mrs",
+					name: "Gabriel Mushi",
+					type: "Double",
+					sn: 104,
+					code: "738041",
+				},
+				{
+					title: "Miss",
+					name: "Erna & Rose",
+					type: "Double",
+					sn: 105,
+					code: "148524",
+				},
+				{
+					title: "",
+					name: "Isaya & Klemy",
+					type: "Double",
+					sn: 106,
+					code: "420635",
+				},
+				{
+					title: "Miss",
+					name: "Rose & Abella",
+					type: "Double",
+					sn: 107,
+					code: "054422",
+				},
+				{
+					title: "",
+					name: "Fredy Malaki",
+					type: "Double",
+					sn: 108,
+					code: "531314",
+				},
+				{
+					title: "",
+					name: "Rachel Lyeme",
+					type: "Single",
+					sn: 109,
+					code: "714285",
+				},
+				{
+					title: "",
+					name: "Walter Kimaro",
+					type: "Double",
+					sn: 110,
+					code: "231530",
+				},
+				{
+					title: "Miss",
+					name: "Pamela & Juliana",
+					type: "Double",
+					sn: 111,
+					code: "633738",
+				},
+				{
+					title: "Mr. & Mrs",
+					name: "Godson Bigirwa",
+					type: "Double",
+					sn: 112,
+					code: "147586",
+				},
+				{
+					title: "Mr. & Mrs",
+					name: "Gilbert Kamara",
+					type: "Double",
+					sn: 113,
+					code: "483812",
+				},
+				{
+					title: "Mr. & Mrs",
+					name: "John Dismas",
+					type: "Double",
+					sn: 114,
+					code: "433288",
+				},
+				{
+					title: "",
+					name: "Godlove Malekela",
+					type: "Double",
+					sn: 115,
+					code: "431311",
+				},
+				{
+					title: "Miss",
+					name: "Karen & Emmy",
+					type: "Double",
+					sn: 116,
+					code: "155632",
+				},
+				{
+					title: "Mr. & Mrs",
+					name: "Ezra Murithians",
+					type: "Double",
+					sn: 117,
+					code: "346633",
+				},
+				{
+					title: "Mr. & Mrs",
+					name: "Charles Twalipo",
+					type: "Double",
+					sn: 118,
+					code: "220708",
+				},
+				{
+					title: "",
+					name: "Nelson & Subira",
+					type: "Double",
+					sn: 119,
+					code: "407862",
+				},
+				{
+					title: "",
+					name: "Jackson & Jessica",
+					type: "Double",
+					sn: 120,
+					code: "885718",
+				},
+				{
+					title: "",
+					name: "Angle E. Ruzika",
+					type: "Single",
+					sn: 121,
+					code: "035621",
+				},
+				{
+					title: "",
+					name: "Daniel Kisaka",
+					type: "Double",
+					sn: 122,
+					code: "803884",
+				},
+				{
+					title: "",
+					name: "Rehema & Ismail",
+					type: "Double",
+					sn: 123,
+					code: "860480",
+				},
+				{
+					title: "Mr. & Mrs",
+					name: "Godfrey Kingazi",
+					type: "Double",
+					sn: 124,
+					code: "763852",
+				},
+				{
+					title: "Mr. & Mrs",
+					name: "Mdoe",
+					type: "Double",
+					sn: 125,
+					code: "086662",
+				},
+				{
+					title: "",
+					name: "Felista Mauya",
+					type: "Double",
+					sn: 126,
+					code: "447065",
+				},
+				{
+					title: "Mr & Mrs",
+					name: "Samwel Msamala",
+					type: "Double",
+					sn: 127,
+					code: "038867",
+				},
+				{
+					title: "",
+					name: "John Mero",
+					type: "Double",
+					sn: 128,
+					code: "871243",
+				},
+				{
+					title: "Mr. &  Mrs",
+					name: "Kimaro",
+					type: "Double",
+					sn: 129,
+					code: "715423",
+				},
+				{
+					title: "",
+					name: "Herieth & Maria Mhina",
+					type: "Double",
+					sn: 130,
+					code: "317754",
+				},
+				{
+					title: "Mr. & Mrs",
+					name: "Jackson Shija D",
+					type: "Double",
+					sn: 131,
+					code: "280380",
+				},
+				{
+					title: "",
+					name: "Elinde Titus",
+					type: "Single",
+					sn: 132,
+					code: "661151",
+				},
+				{
+					title: "",
+					name: "Zawadi Mbwambo",
+					type: "Double",
+					sn: 133,
+					code: "531141",
+				},
+				{
+					title: "Mr. & Mrs",
+					name: "Eng  Zuberi Zahoro",
+					type: "Double",
+					sn: 134,
+					code: "666548",
+				},
+				{
+					title: "Mr. & Mrs",
+					name: "Eng Abdalah Hashimu",
+					type: "Double",
+					sn: 135,
+					code: "323277",
+				},
+				{
+					title: "Mr. & Mrs",
+					name: "Eng D  Shemangale",
+					type: "Double",
+					sn: 136,
+					code: "712058",
+				},
+				{
+					title: "Mr. & Mrs",
+					name: "Eng David  Shemangale",
+					type: "Double",
+					sn: 137,
+					code: "853355",
+				},
+				{
+					title: "",
+					name: "Kibwegere Fathers",
+					type: "Double",
+					sn: 138,
+					code: "531387",
+				},
+				{
+					title: "Mr. Mrs",
+					name: "Mgawe",
+					type: "Double",
+					sn: 139,
+					code: "348475",
+				},
+				{
+					title: "Mr. & Mrs",
+					name: "Justin Kiondo",
+					type: "Double",
+					sn: 140,
+					code: "247172",
+				},
+				{
+					title: "Mr. & Mrs",
+					name: "Fransis Kiondo",
+					type: "Double",
+					sn: 141,
+					code: "205031",
+				},
+				{
+					title: "Mr. & Mrs",
+					name: "Mosha",
+					type: "Double",
+					sn: 142,
+					code: "173731",
+				},
+				{
+					title: "",
+					name: "Dickson Mtalemwa",
+					type: "Double",
+					sn: 143,
+					code: "668127",
+				},
+				{
+					title: "Mrs",
+					name: "Titus",
+					type: "Single",
+					sn: 144,
+					code: "441560",
+				},
+				{
+					title: "",
+					name: "Nassar Kingazi",
+					type: "Single",
+					sn: 145,
+					code: "681686",
+				},
+				{
+					title: "",
+					name: "Witness Mwanga",
+					type: "Single",
+					sn: 146,
+					code: "818366",
+				},
+				{
+					title: "Mr. Mrs",
+					name: "Gidion Chando",
+					type: "Double",
+					sn: 147,
+					code: "241050",
+				},
+				{
+					title: "Mwl.",
+					name: "Lusiana Chando",
+					type: "Double",
+					sn: 148,
+					code: "205375",
+				},
+				{
+					title: "Mr. & Mrs",
+					name: "Msafiri Diliwa",
+					type: "Double",
+					sn: 149,
+					code: "776577",
+				},
+				{
+					title: "",
+					name: "Benjamini Msagati",
+					type: "Double",
+					sn: 150,
+					code: "860777",
+				},
+				{
+					title: "",
+					name: "Noel Kimaro",
+					type: "Double",
+					sn: 151,
+					code: "082576",
+				},
+				{
+					title: "Mr. & Mrs",
+					name: "O Luoga",
+					type: "Double",
+					sn: 152,
+					code: "423856",
+				},
+				{
+					title: "Mr. & Mrs",
+					name: "Kipandula",
+					type: "Double",
+					sn: 153,
+					code: "450587",
+				},
+				{
+					title: "",
+					name: "Emma Kimaro",
+					type: "Double",
+					sn: 154,
+					code: "756523",
+				},
+				{
+					title: "",
+					name: "Kimaro G",
+					type: "Double",
+					sn: 155,
+					code: "437076",
+				},
+				{
+					title: "",
+					name: "Mage",
+					type: "Double",
+					sn: 156,
+					code: "677710",
+				},
+				{
+					title: "",
+					name: "Glory",
+					type: "Double",
+					sn: 157,
+					code: "132368",
+				},
+				{
+					title: "",
+					name: "Rachel",
+					type: "Double",
+					sn: 158,
+					code: "518038",
+				},
+				{
+					title: "Mr. & Mrs",
+					name: "Eng Abdalah",
+					type: "Double",
+					sn: 159,
+					code: "316566",
+				},
+				{
+					title: "Mr. & Mrs",
+					name: "Eng Zuberi Zahoro",
+					type: "Double",
+					sn: 160,
+					code: "716255",
+				},
+			];
+
+			function cards() {
+				return {
+					rsvpContacts: [
+						{ name: "Gidion Chando", phone: "0678 888 028" },
+						{ name: "Nelson Malekela", phone: "0714 907 734" },
+						{ name: "Jackson Twalipo", phone: "0767 188 777" },
+					],
+					searchQuery: "Walter ",
+					// users: users.slice(2, 3),
+					typeFilter: "",
+					get users() {
+						return users.filter((user) => {
+							if (this.typeFilter) {
+								if (user.type != this.typeFilter) return false;
+							}
+
+							if (this.searchQuery)
+								return user.name
+									.toLowerCase()
+									.includes(this.searchQuery.toLowerCase());
+
+							return true;
+						});
+					},
+				};
+			}
+
+			function card() {
+				return {
+					init() {
+						var user = this.$data.user;
+						var el = this.$el;
+						var qrEl = el.querySelector("#qr");
+						var code = user.code;
+
+						el.setAttribute(
+							"data-file-name",
+							[user.sn, user.name].join(" ")
+						);
+
+						const config = {
+							text: code,
+							width: 72,
+							height: 72,
+							quietZone: 0,
+							colorDark: "rgba(149, 184, 93, 1)",
+							// colorDark: "#510216",
+							colorLight: "#ffffff",
+							PI: "rgba(149, 184, 93, 0.85)",
+							correctLevel: QRCode.CorrectLevel.H, // L, M, Q, H
+						};
+
+						var t = new QRCode(qrEl, config);
+					},
+				};
+			}
+
+			async function downloadCards() {
+				document.querySelectorAll(".card-item").forEach(downloadCard);
+			}
+
+			const names = users.map(({ name, title }) =>
+				`${title} ${name}`.trim()
+			);
+			const sns = users.map(({ sn }) => sn);
+			async function downloadCard(card, index) {
+				const name = card.getAttribute("data-file-name");
+				getReportImage(card, name);
+			}
+
+			async function getReportImage(card, name) {
+				try {
+					const scale = 2;
+					const dataUrl = await domtoimage.toPng(card, {
+						width: card.clientWidth * scale * 1.04,
+						height: card.clientHeight * scale,
+						style: {
+							position: "fixed",
+							top: 12,
+							left: 12,
+							zIndex: 20,
+							transform: "scale(" + scale + ")",
+							transformOrigin: "top left",
+						},
+					});
+					const response = await fetch(dataUrl);
+					const blob = await response.blob();
+
+					const link = document.createElement("a");
+					link.href = window.URL.createObjectURL(blob);
+					link.href = dataUrl;
+					link.download = name + ".png";
+
+					document.body.appendChild(link);
+					link.click();
+					link.remove();
+				} catch (error) {
+					console.log("Card error: ", error.target, card);
+				}
+
+				/*
+						                   var fd = new FormData();
+						                   fd.append('data', blob);
+						                   const res = await postRequest("/studio/analytics/downloadReportAsPdf", fd);
+
+						                   pdfReportBlob = new Blob([res]);
+						                   return pdfReportBlob;
+						               */
+			}
+		</script>
+	</body>
+</html>
