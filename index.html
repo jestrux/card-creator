@@ -2,43 +2,44 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Document</title>
 
-		<!-- <link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="icon" href="favicon.ico" sizes="any" />
+		<link rel="apple-touch-icon" href="img/icons/icon-192-maskable.png" />
+
+		<meta
+			name="theme-color"
+			content="#FFFFFF"
+			media="(prefers-color-scheme: light)"
+		/>
+		<meta
+			name="theme-color"
+			content="#252525"
+			media="(prefers-color-scheme: dark)"
+		/>
+		<meta name="description" content="Wedding card generator" />
+		<link rel="manifest" href="manifest.json" />
+
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+		/>
+		<title>Kadi</title>
+
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
-			href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Parisienne&display=swap"
+			href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap"
 			rel="stylesheet"
-		/> -->
+		/>
 
-		<!-- <script src="https://cdn.tailwindcss.com"></script> -->
-		<script src="scripts/tailwind-cdn.js"></script>
-		<script>
-			window.tailwind.config = {
-				theme: {
-					extend: {
-						colors: {
-							primary:
-								"rgb(var(--primary-color) / <alpha-value>)",
-						},
-					},
-				},
-			};
-		</script>
-	</head>
-	<body>
 		<style>
 			:root {
-				--primary-color: 149 184 93;
+				/* --primary-color: 149 184 93; */
+				--primary-color: #95b85d;
 				--border-gradient-from: #b3b85d;
 				--border-gradient-to: #226271;
-				/* --gradient-from: #abb85d;
-				--gradient-to: #6e8b3b; */
 				--gradient-from: #95b85d;
 				--gradient-to: #749d45;
-				/* --gradient-from: gold;
-				--gradient-to: red; */
 			}
 
 			@font-face {
@@ -54,29 +55,12 @@
 				font-family: "Parisienne", cursive;
 			}
 
-			#couple {
-				/* -webkit-mask-image: -webkit-gradient(
-					linear,
-					center top,
-					center bottom,
-					color-stop(0, rgba(0, 0, 0, 1)),
-					color-stop(0.35, rgba(0, 0, 0, 1)),
-					color-stop(0.65, rgba(0, 0, 0, 0.05)),
-					color-stop(0.75, rgba(0, 0, 0, 0)),
-					color-stop(1, rgba(0, 0, 0, 0))
-				); */
-			}
-
-			.text-primary {
-				/* color: #510216; */
-				color: rgb(83, 105, 45);
-			}
-
 			.mont,
 			.mont * {
 				font-family: "Open Sans", "Helvetica Neue", sans-serif;
 			}
 
+			input[type="text"],
 			input[type="search"] {
 				width: 100%;
 				border: 1px solid #ddd;
@@ -86,65 +70,918 @@
 			input[type="search"]::placeholder {
 				color: rgba(0, 0, 0, 0.4);
 			}
+
+			[x-cloak] {
+				display: none;
+			}
 		</style>
 
+		<!-- <script src="scripts/tailwind-cdn.js"></script> -->
+		<style>
+			*,
+			::after,
+			::before {
+				box-sizing: border-box;
+				border-width: 0;
+				border-style: solid;
+				border-color: #e5e7eb;
+			}
+			::after,
+			::before {
+				--tw-content: "";
+			}
+			html {
+				line-height: 1.5;
+				-webkit-text-size-adjust: 100%;
+				-moz-tab-size: 4;
+				tab-size: 4;
+				font-family: ui-sans-serif, system-ui, -apple-system,
+					BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+					Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+					"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+			}
+			body {
+				margin: 0;
+				line-height: inherit;
+			}
+			hr {
+				height: 0;
+				color: inherit;
+				border-top-width: 1px;
+			}
+			abbr:where([title]) {
+				text-decoration: underline dotted;
+			}
+			h1,
+			h2,
+			h3,
+			h4,
+			h5,
+			h6 {
+				font-size: inherit;
+				font-weight: inherit;
+			}
+			a {
+				color: inherit;
+				text-decoration: inherit;
+			}
+			b,
+			strong {
+				font-weight: bolder;
+			}
+			code,
+			kbd,
+			pre,
+			samp {
+				font-family: ui-monospace, SFMono-Regular, Menlo, Monaco,
+					Consolas, "Liberation Mono", "Courier New", monospace;
+				font-size: 1em;
+			}
+			small {
+				font-size: 80%;
+			}
+			sub,
+			sup {
+				font-size: 75%;
+				line-height: 0;
+				position: relative;
+				vertical-align: baseline;
+			}
+			sub {
+				bottom: -0.25em;
+			}
+			sup {
+				top: -0.5em;
+			}
+			table {
+				text-indent: 0;
+				border-color: inherit;
+				border-collapse: collapse;
+			}
+			button,
+			input,
+			optgroup,
+			select,
+			textarea {
+				font-family: inherit;
+				font-size: 100%;
+				line-height: inherit;
+				color: inherit;
+				margin: 0;
+				padding: 0;
+			}
+			button,
+			select {
+				text-transform: none;
+			}
+			[type="button"],
+			[type="reset"],
+			[type="submit"],
+			button {
+				-webkit-appearance: button;
+				background-color: transparent;
+				background-image: none;
+			}
+			:-moz-focusring {
+				outline: auto;
+			}
+			:-moz-ui-invalid {
+				box-shadow: none;
+			}
+			progress {
+				vertical-align: baseline;
+			}
+			::-webkit-inner-spin-button,
+			::-webkit-outer-spin-button {
+				height: auto;
+			}
+			[type="search"] {
+				-webkit-appearance: textfield;
+				outline-offset: -2px;
+			}
+			::-webkit-search-decoration {
+				-webkit-appearance: none;
+			}
+			::-webkit-file-upload-button {
+				-webkit-appearance: button;
+				font: inherit;
+			}
+			summary {
+				display: list-item;
+			}
+			blockquote,
+			dd,
+			dl,
+			figure,
+			h1,
+			h2,
+			h3,
+			h4,
+			h5,
+			h6,
+			hr,
+			p,
+			pre {
+				margin: 0;
+			}
+			fieldset {
+				margin: 0;
+				padding: 0;
+			}
+			legend {
+				padding: 0;
+			}
+			menu,
+			ol,
+			ul {
+				list-style: none;
+				margin: 0;
+				padding: 0;
+			}
+			textarea {
+				resize: vertical;
+			}
+			input::placeholder,
+			textarea::placeholder {
+				opacity: 1;
+				color: #9ca3af;
+			}
+			[role="button"],
+			button {
+				cursor: pointer;
+			}
+			:disabled {
+				cursor: default;
+			}
+			audio,
+			canvas,
+			embed,
+			iframe,
+			img,
+			object,
+			svg,
+			video {
+				display: block;
+				vertical-align: middle;
+			}
+			img,
+			video {
+				max-width: 100%;
+				height: auto;
+			}
+			[hidden] {
+				display: none;
+			}
+			*,
+			::after,
+			::before {
+				--tw-translate-x: 0;
+				--tw-translate-y: 0;
+				--tw-rotate: 0;
+				--tw-skew-x: 0;
+				--tw-skew-y: 0;
+				--tw-scale-x: 1;
+				--tw-scale-y: 1;
+				--tw-pan-x: ;
+				--tw-pan-y: ;
+				--tw-pinch-zoom: ;
+				--tw-scroll-snap-strictness: proximity;
+				--tw-ordinal: ;
+				--tw-slashed-zero: ;
+				--tw-numeric-figure: ;
+				--tw-numeric-spacing: ;
+				--tw-numeric-fraction: ;
+				--tw-ring-inset: ;
+				--tw-ring-offset-width: 0px;
+				--tw-ring-offset-color: #fff;
+				--tw-ring-color: rgb(59 130 246 / 0.5);
+				--tw-ring-offset-shadow: 0 0 #0000;
+				--tw-ring-shadow: 0 0 #0000;
+				--tw-shadow: 0 0 #0000;
+				--tw-shadow-colored: 0 0 #0000;
+				--tw-blur: ;
+				--tw-brightness: ;
+				--tw-contrast: ;
+				--tw-grayscale: ;
+				--tw-hue-rotate: ;
+				--tw-invert: ;
+				--tw-saturate: ;
+				--tw-sepia: ;
+				--tw-drop-shadow: ;
+				--tw-backdrop-blur: ;
+				--tw-backdrop-brightness: ;
+				--tw-backdrop-contrast: ;
+				--tw-backdrop-grayscale: ;
+				--tw-backdrop-hue-rotate: ;
+				--tw-backdrop-invert: ;
+				--tw-backdrop-opacity: ;
+				--tw-backdrop-saturate: ;
+				--tw-backdrop-sepia: ;
+			}
+			.container {
+				width: 100%;
+			}
+			@media (min-width: 640px) {
+				.container {
+					max-width: 640px;
+				}
+			}
+			@media (min-width: 768px) {
+				.container {
+					max-width: 768px;
+				}
+			}
+			@media (min-width: 1024px) {
+				.container {
+					max-width: 1024px;
+				}
+			}
+			@media (min-width: 1280px) {
+				.container {
+					max-width: 1280px;
+				}
+			}
+			@media (min-width: 1536px) {
+				.container {
+					max-width: 1536px;
+				}
+			}
+			.pointer-events-none {
+				pointer-events: none;
+			}
+			.fixed {
+				position: fixed;
+			}
+			.absolute {
+				position: absolute;
+			}
+			.relative {
+				position: relative;
+			}
+			.sticky {
+				position: sticky;
+			}
+			.inset-0 {
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+			}
+			.inset-x-0 {
+				left: 0;
+				right: 0;
+			}
+			.inset-y-0 {
+				top: 0;
+				bottom: 0;
+			}
+			.top-0 {
+				top: 0;
+			}
+			.-bottom-16 {
+				bottom: -4rem;
+			}
+			.top-6 {
+				top: 1.5rem;
+			}
+			.-bottom-8 {
+				bottom: -2rem;
+			}
+			.right-4 {
+				right: 1rem;
+			}
+			.left-0 {
+				left: 0;
+			}
+			.right-0 {
+				right: 0;
+			}
+			.bottom-0 {
+				bottom: 0;
+			}
+			.left-3 {
+				left: 0.75rem;
+			}
+			.isolate {
+				isolation: isolate;
+			}
+			.z-20 {
+				z-index: 20;
+			}
+			.z-10 {
+				z-index: 10;
+			}
+			.mx-auto {
+				margin-left: auto;
+				margin-right: auto;
+			}
+			.my-0 {
+				margin-top: 0;
+				margin-bottom: 0;
+			}
+			.mx-1 {
+				margin-left: 0.25rem;
+				margin-right: 0.25rem;
+			}
+			.mx-4 {
+				margin-left: 1rem;
+				margin-right: 1rem;
+			}
+			.my-auto {
+				margin-top: auto;
+				margin-bottom: auto;
+			}
+			.my-0\.5 {
+				margin-top: 0.125rem;
+				margin-bottom: 0.125rem;
+			}
+			.mr-2 {
+				margin-right: 0.5rem;
+			}
+			.mt-2 {
+				margin-top: 0.5rem;
+			}
+			.-ml-3 {
+				margin-left: -0.75rem;
+			}
+			.ml-12 {
+				margin-left: 3rem;
+			}
+			.ml-6 {
+				margin-left: 1.5rem;
+			}
+			.mt-1 {
+				margin-top: 0.25rem;
+			}
+			.ml-3 {
+				margin-left: 0.75rem;
+			}
+			.mt-24 {
+				margin-top: 6rem;
+			}
+			.mt-3 {
+				margin-top: 0.75rem;
+			}
+			.mb-2 {
+				margin-bottom: 0.5rem;
+			}
+			.mt-4 {
+				margin-top: 1rem;
+			}
+			.mr-4 {
+				margin-right: 1rem;
+			}
+			.mt-5 {
+				margin-top: 1.25rem;
+			}
+			.ml-4 {
+				margin-left: 1rem;
+			}
+			.-mr-32 {
+				margin-right: -8rem;
+			}
+			.-mb-10 {
+				margin-bottom: -2.5rem;
+			}
+			.-mt-\[95px\] {
+				margin-top: -95px;
+			}
+			.mt-\[7\.6rem\] {
+				margin-top: 7.6rem;
+			}
+			.block {
+				display: block;
+			}
+			.flex {
+				display: flex;
+			}
+			.inline-flex {
+				display: inline-flex;
+			}
+			.table {
+				display: table;
+			}
+			.hidden {
+				display: none;
+			}
+			.h-16 {
+				height: 4rem;
+			}
+			.h-3 {
+				height: 0.75rem;
+			}
+			.h-full {
+				height: 100%;
+			}
+			.h-10 {
+				height: 2.5rem;
+			}
+			.w-full {
+				width: 100%;
+			}
+			.w-40 {
+				width: 10rem;
+			}
+			.w-64 {
+				width: 16rem;
+			}
+			.flex-1 {
+				flex: 1 1 0%;
+			}
+			.flex-shrink-0 {
+				flex-shrink: 0;
+			}
+			.flex-shrink {
+				flex-shrink: 1;
+			}
+			.border-collapse {
+				border-collapse: collapse;
+			}
+			.rotate-1 {
+				--tw-rotate: 1deg;
+				transform: translate(
+						var(--tw-translate-x),
+						var(--tw-translate-y)
+					)
+					rotate(var(--tw-rotate)) skewX(var(--tw-skew-x))
+					skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x))
+					scaleY(var(--tw-scale-y));
+			}
+			.scale-\[1\.1\] {
+				--tw-scale-x: 1.1;
+				--tw-scale-y: 1.1;
+				transform: translate(
+						var(--tw-translate-x),
+						var(--tw-translate-y)
+					)
+					rotate(var(--tw-rotate)) skewX(var(--tw-skew-x))
+					skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x))
+					scaleY(var(--tw-scale-y));
+			}
+			.transform {
+				transform: translate(
+						var(--tw-translate-x),
+						var(--tw-translate-y)
+					)
+					rotate(var(--tw-rotate)) skewX(var(--tw-skew-x))
+					skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x))
+					scaleY(var(--tw-scale-y));
+			}
+			.cursor-pointer {
+				cursor: pointer;
+			}
+			.resize {
+				resize: both;
+			}
+			.flex-col {
+				flex-direction: column;
+			}
+			.flex-wrap {
+				flex-wrap: wrap;
+			}
+			.items-end {
+				align-items: flex-end;
+			}
+			.items-center {
+				align-items: center;
+			}
+			.justify-center {
+				justify-content: center;
+			}
+			.justify-between {
+				justify-content: space-between;
+			}
+			.gap-8 {
+				gap: 2rem;
+			}
+			.gap-2 {
+				gap: 0.5rem;
+			}
+			.gap-1 {
+				gap: 0.25rem;
+			}
+			.gap-3 {
+				gap: 0.75rem;
+			}
+			.gap-1\.5 {
+				gap: 0.375rem;
+			}
+			.space-y-3 > :not([hidden]) ~ :not([hidden]) {
+				--tw-space-y-reverse: 0;
+				margin-top: calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));
+				margin-bottom: calc(0.75rem * var(--tw-space-y-reverse));
+			}
+			.-space-y-1 > :not([hidden]) ~ :not([hidden]) {
+				--tw-space-y-reverse: 0;
+				margin-top: calc(
+					-0.25rem * calc(1 - var(--tw-space-y-reverse))
+				);
+				margin-bottom: calc(-0.25rem * var(--tw-space-y-reverse));
+			}
+			.divide-x > :not([hidden]) ~ :not([hidden]) {
+				--tw-divide-x-reverse: 0;
+				border-right-width: calc(1px * var(--tw-divide-x-reverse));
+				border-left-width: calc(
+					1px * calc(1 - var(--tw-divide-x-reverse))
+				);
+			}
+			.divide-black\/20 > :not([hidden]) ~ :not([hidden]) {
+				border-color: rgb(0 0 0 / 0.2);
+			}
+			.overflow-hidden {
+				overflow: hidden;
+			}
+			.rounded-md {
+				border-radius: 0.375rem;
+			}
+			.rounded-full {
+				border-radius: 9999px;
+			}
+			.rounded-xl {
+				border-radius: 0.75rem;
+			}
+			.rounded-lg {
+				border-radius: 0.5rem;
+			}
+			.border {
+				border-width: 1px;
+			}
+			.border-b {
+				border-bottom-width: 1px;
+			}
+			.border-l {
+				border-left-width: 1px;
+			}
+			.border-black\/20 {
+				border-color: rgb(0 0 0 / 0.2);
+			}
+			.bg-white {
+				--tw-bg-opacity: 1;
+				background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+			}
+			.bg-transparent {
+				background-color: transparent;
+			}
+			.bg-black\/5 {
+				background-color: rgb(0 0 0 / 0.05);
+			}
+			.bg-black\/\[0\.03\] {
+				background-color: rgb(0 0 0 / 0.03);
+			}
+			.bg-cover {
+				background-size: cover;
+			}
+			.object-cover {
+				object-fit: cover;
+			}
+			.px-4 {
+				padding-left: 1rem;
+				padding-right: 1rem;
+			}
+			.px-6 {
+				padding-left: 1.5rem;
+				padding-right: 1.5rem;
+			}
+			.py-8 {
+				padding-top: 2rem;
+				padding-bottom: 2rem;
+			}
+			.py-12 {
+				padding-top: 3rem;
+				padding-bottom: 3rem;
+			}
+			.py-1 {
+				padding-top: 0.25rem;
+				padding-bottom: 0.25rem;
+			}
+			.px-8 {
+				padding-left: 2rem;
+				padding-right: 2rem;
+			}
+			.py-3 {
+				padding-top: 0.75rem;
+				padding-bottom: 0.75rem;
+			}
+			.py-6 {
+				padding-top: 1.5rem;
+				padding-bottom: 1.5rem;
+			}
+			.pl-3 {
+				padding-left: 0.75rem;
+			}
+			.pt-1 {
+				padding-top: 0.25rem;
+			}
+			.pt-3 {
+				padding-top: 0.75rem;
+			}
+			.pb-4 {
+				padding-bottom: 1rem;
+			}
+			.pl-1 {
+				padding-left: 0.25rem;
+			}
+			.pl-10 {
+				padding-left: 2.5rem;
+			}
+			.text-center {
+				text-align: center;
+			}
+			.text-right {
+				text-align: right;
+			}
+			.font-mono {
+				font-family: ui-monospace, SFMono-Regular, Menlo, Monaco,
+					Consolas, "Liberation Mono", "Courier New", monospace;
+			}
+			.font-serif {
+				font-family: ui-serif, Georgia, Cambria, "Times New Roman",
+					Times, serif;
+			}
+			.text-xs {
+				font-size: 0.75rem;
+				line-height: 1rem;
+			}
+			.text-sm {
+				font-size: 0.875rem;
+				line-height: 1.25rem;
+			}
+			.text-xl {
+				font-size: 1.25rem;
+				line-height: 1.75rem;
+			}
+			.text-4xl {
+				font-size: 2.25rem;
+				line-height: 2.5rem;
+			}
+			.text-\[13px\] {
+				font-size: 13px;
+			}
+			.font-bold {
+				font-weight: 700;
+			}
+			.font-medium {
+				font-weight: 500;
+			}
+			.font-semibold {
+				font-weight: 600;
+			}
+			.font-light {
+				font-weight: 300;
+			}
+			.uppercase {
+				text-transform: uppercase;
+			}
+			.leading-tight {
+				line-height: 1.25;
+			}
+			.leading-loose {
+				line-height: 2;
+			}
+			.leading-none {
+				line-height: 1;
+			}
+			.tracking-wide {
+				letter-spacing: 0.025em;
+			}
+			.tracking-widest {
+				letter-spacing: 0.1em;
+			}
+			.text-white {
+				--tw-text-opacity: 1;
+				color: rgb(255 255 255 / var(--tw-text-opacity));
+			}
+			.text-black {
+				--tw-text-opacity: 1;
+				color: rgb(0 0 0 / var(--tw-text-opacity));
+			}
+			.text-black\/50 {
+				color: rgb(0 0 0 / 0.5);
+			}
+			.text-black\/70 {
+				color: rgb(0 0 0 / 0.7);
+			}
+			.text-black\/75 {
+				color: rgb(0 0 0 / 0.75);
+			}
+			.text-opacity-75 {
+				--tw-text-opacity: 0.75;
+			}
+			.underline {
+				text-decoration-line: underline;
+			}
+			.opacity-70 {
+				opacity: 0.7;
+			}
+			.opacity-10 {
+				opacity: 0.1;
+			}
+			.opacity-40 {
+				opacity: 0.4;
+			}
+			.opacity-50 {
+				opacity: 0.5;
+			}
+			.shadow-sm {
+				--tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+				--tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+				box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+					var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+			}
+			.outline {
+				outline-style: solid;
+			}
+			.invert {
+				--tw-invert: invert(100%);
+				filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast)
+					var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert)
+					var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+			}
+			.filter {
+				filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast)
+					var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert)
+					var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+			}
+			.focus\:outline-none:focus {
+				outline: 2px solid transparent;
+				outline-offset: 2px;
+			}
+			@media (min-width: 768px) {
+				.md\:justify-between {
+					justify-content: space-between;
+				}
+				.md\:gap-8 {
+					gap: 2rem;
+				}
+			}
+		</style>
+
+		<script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,container-queries"></script>
+
+		<script>
+			window.tailwind.config = {
+				theme: {
+					extend: {
+						colors: {
+							// primary:
+							// 	"rgb(var(--primary-color) / <alpha-value>)",
+							primary: "var(--primary-color)",
+						},
+					},
+				},
+			};
+		</script>
+	</head>
+	<body class="bg-black/5">
 		<div
-			class="grid grid-cols-12 gap-6 items-start p-8"
 			x-data="cards()"
 			x-on:downloading-cards.window="downloading = true"
 			x-on:cards-downloaded.window="downloading = false"
+			x-bind:style="{
+				'--primary-color': theme.color,
+				'--gradient-from': theme.background[0],
+				'--gradient-to': theme.background[1],
+				'--border-gradient-from': theme.border[0],
+				'--border-gradient-to': theme.border[1],
+			}"
 		>
-			<div
-				class="col-span-3 sticky top-10 bg-white shadow-sm isolate z-20 border rounded-lg overflow-hidden"
-			>
-				<!-- <h2 class="text-2xl/none font-bold mb-6">Card Creator</h2> -->
-				<div class="px-4 pt-3 pb-5 space-y-4 relative">
-					<div class="absolute top-0 inset-x-0 h-3 overflow-hidden">
-						<img class="w-full" src="img/palette.jpeg" alt="" />
-					</div>
+			<div class="sticky top-0 bg-white shadow-sm isolate z-20 border-b">
+				<div
+					class="py-3 container mx-auto flex gap-3 items-center justify-center md:justify-between flex-wrap"
+				>
+					<h2 class="flex-shrink-0 text-2xl/none font-bold">
+						Card Creator
+					</h2>
 
-					<div>
-						<label class="opacity-70">Search attendees: </label>
-						<input
-							type="search"
-							placeholder="Type to search..."
-							x-model="searchQuery"
-						/>
-					</div>
-
-					<div class="pb-1">
-						<label class="opacity-70">Filter by type:</label>
-						<div
-							class="mt-px inline-flex items-center rounded overflow-hidden border divide-x divide-black/20 border-black/20"
-							x-data="{filters: ['Single', 'Double']}"
-						>
-							<label
-								class="h-8 px-4 cursor-pointer text-xs font-medium tracking-wide flex items-center uppercase border-l"
-								x-bind:class="!typeFilter ? 'bg-primary text-white !border-primary' : 'text-black/50'"
-								x-on:click="typeFilter = ''"
+					<div class="flex flex-wrap gap-3 md:gap-8 justify-center">
+						<div class="relative" style="width: 300px">
+							<!-- <label class="opacity-70">Search attendees: </label> -->
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke-width="1.5"
+								stroke="currentColor"
+								class="size-5 absolute inset-y-0 my-auto left-3 opacity-50 pointer-events-none"
 							>
-								All
-							</label>
-							<template x-for="filter in filters">
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+								/>
+							</svg>
+
+							<input
+								type="search"
+								placeholder="Type to search..."
+								x-model="searchQuery"
+								class="pl-10 bg-black/[0.03]"
+							/>
+						</div>
+
+						<div class="my-0.5">
+							<div
+								class="h-10 inline-flex items-center rounded-md overflow-hidden border divide-x divide-black/20 border-black/20"
+								x-data="{filters: ['Single', 'Double']}"
+							>
 								<label
-									class="h-8 px-4 cursor-pointer text-xs font-medium tracking-wide flex items-center uppercase border-l"
-									x-text="filter"
-									x-bind:class="typeFilter == filter ? 'bg-primary text-white !border-primary' : 'text-black/50'"
-									x-on:click="typeFilter = filter"
+									class="bg-primary text-white !border-primary h-full px-4 cursor-pointer text-xs font-medium tracking-wide flex items-center uppercase"
+									x-bind:class="!typeFilter ? 'bg-primary text-white !border-primary' : 'bg-transparent !text-black/50'"
+									x-on:click="typeFilter = ''"
 								>
+									All
 								</label>
-							</template>
+								<label
+									class="h-full px-4 cursor-pointer text-xs font-medium tracking-wide flex items-center uppercase border-l"
+									x-bind:class="typeFilter == 'Single' ? 'bg-primary text-white !border-primary' : 'text-black/50'"
+									x-on:click="typeFilter = 'Single'"
+								>
+									Single
+								</label>
+								<label
+									class="h-full px-4 cursor-pointer text-xs font-medium tracking-wide flex items-center uppercase border-l"
+									x-bind:class="typeFilter == 'Double' ? 'bg-primary text-white !border-primary' : 'text-black/50'"
+									x-on:click="typeFilter = 'Double'"
+								>
+									Double
+								</label>
+							</div>
 						</div>
 					</div>
 
 					<button
 						onclick="downloadCards()"
-						class="w-full pdf-report-downloader focus:outline-none flex items-center justify-center px-6 h-10 uppercase text-sm tracking-wide font-semibold bg-primary text-white rounded-full"
+						class="focus:outline-none flex gap-2.5 items-center justify-center px-6 h-10 uppercase text-sm tracking-wide font-semibold bg-primary text-white rounded-full"
+						x-bind:class="downloading && 'opacity-80 pointer-events-none'"
 						data-component-field="{id: 'action'}"
+						style="width: 220px"
 					>
 						<svg
+							x-cloak
+							x-show="downloading"
+							class="animate-spin size-5"
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+						>
+							<circle
+								class="opacity-25"
+								cx="12"
+								cy="12"
+								r="10"
+								stroke="currentColor"
+								stroke-width="4"
+							></circle>
+							<path
+								class="opacity-75"
+								fill="currentColor"
+								d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+							></path>
+						</svg>
+
+						<svg
 							x-show="!downloading"
-							class="mr-2 size-5"
+							class="size-5"
 							fill="none"
 							stroke="currentColor"
 							viewBox="0 0 24 24"
@@ -159,18 +996,241 @@
 						</svg>
 
 						<span
-							x-text="downloading ? 'Downloading...' : 'Download Cards'"
-						></span>
+							x-text="downloading ? 'Downloading' : 'Download Cards'"
+						>
+							Download Cards
+						</span>
 					</button>
 				</div>
 			</div>
 
-			<div id="reportWrapper" class="col-span-9">
-				<div x-show="!users.length" class="text-center text-xl py-12">
+			<div class="bg-black/5 pt-3 pb-5" x-cloak>
+				<div
+					class="container mx-auto flex gap-3 items-center justify-center flex-wrap"
+				>
+					<div
+						class="px-3 lg:px-0 flex flex-wrap md:grid grid-cols-2 xl:grid-cols-12 gap-3"
+					>
+						<div class="col-span-4 grid grid-cols-3 gap-3">
+							<div>
+								<label class="opacity-70">Theme Color</label>
+								<div class="relative flex">
+									<input
+										class="h-10 pointer-events-none"
+										type="text"
+										x-bind:value="theme.color"
+									/>
+
+									<div
+										class="absolute inset-y-3 right-2 flex items-center"
+									>
+										<label
+											class="block size-6 rounded relative"
+											x-bind:style="{backgroundColor: theme.color}"
+										>
+											<input
+												type="color"
+												x-model="theme.color"
+												class="absolute inset-0 opacity-0 pointer-events-none"
+											/>
+										</label>
+									</div>
+								</div>
+							</div>
+
+							<div>
+								<label class="opacity-70">Background</label>
+								<div class="relative flex">
+									<div
+										class="absolute inset-y-3 left-2 flex items-center"
+									>
+										<label
+											class="block size-6 rounded border border-white relative"
+											x-bind:style="{backgroundColor: theme.background[0]}"
+										>
+											<input
+												type="color"
+												x-model="theme.background[0]"
+												class="absolute inset-0 opacity-0 pointer-events-none"
+											/>
+										</label>
+									</div>
+
+									<input
+										class="flex-1 pl-9 h-10 pointer-events-none"
+										type="text"
+										style="
+											background: linear-gradient(
+												120deg,
+												var(--gradient-from) 0%,
+												var(--gradient-to) 100%
+											);
+										"
+									/>
+
+									<div
+										class="absolute inset-y-3 right-2 flex items-center"
+									>
+										<label
+											class="block size-6 rounded border border-white relative"
+											x-bind:style="{backgroundColor: theme.background[1]}"
+										>
+											<input
+												type="color"
+												x-model="theme.background[1]"
+												class="absolute inset-0 opacity-0 pointer-events-none"
+											/>
+										</label>
+									</div>
+								</div>
+							</div>
+
+							<div>
+								<label class="opacity-70">Border</label>
+								<div class="relative flex">
+									<div
+										class="absolute inset-y-3 left-2 flex items-center"
+									>
+										<label
+											class="block size-6 rounded border border-white relative"
+											x-bind:style="{backgroundColor: theme.border[0]}"
+										>
+											<input
+												type="color"
+												x-model="theme.border[0]"
+												class="absolute inset-0 opacity-0 pointer-events-none"
+											/>
+										</label>
+									</div>
+
+									<input
+										class="flex-1 pl-9 h-10 pointer-events-none"
+										type="text"
+										style="
+											background: linear-gradient(
+												120deg,
+												var(--border-gradient-from) 0%,
+												var(--border-gradient-to) 100%
+											);
+										"
+									/>
+
+									<div
+										class="absolute inset-y-3 right-2 flex items-center"
+									>
+										<label
+											class="block size-6 rounded border border-white relative"
+											x-bind:style="{backgroundColor: theme.border[1]}"
+										>
+											<input
+												type="color"
+												x-model="theme.border[1]"
+												class="absolute inset-0 opacity-0 pointer-events-none"
+											/>
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="xl:col-span-2">
+							<label class="opacity-70">Groom</label>
+							<input type="text" x-model="data.groom" />
+						</div>
+						<div class="xl:col-span-2">
+							<label class="opacity-70">Bride</label>
+							<input type="text" x-model="data.bride" />
+						</div>
+
+						<div class="xl:col-span-2">
+							<label class="opacity-70">Date</label>
+							<input type="text" x-model="data.date" />
+						</div>
+
+						<div class="xl:col-span-2">
+							<label class="opacity-70">Bible verse</label>
+							<input type="text" x-model="data.bibleVerse" />
+						</div>
+
+						<div class="xl:col-span-1">
+							<label class="opacity-70">Salutation</label>
+							<input type="text" x-model="data.salutation" />
+						</div>
+
+						<div class="xl:col-span-4">
+							<label class="opacity-70">Message</label>
+							<input type="text" x-model="data.message" />
+						</div>
+
+						<div class="xl:col-span-2">
+							<label class="opacity-70">Church Time</label>
+							<input type="text" x-model="data.church.time" />
+						</div>
+
+						<div class="xl:col-span-2">
+							<label class="opacity-70">Reception Time</label>
+							<input type="text" x-model="data.reception.time" />
+						</div>
+
+						<div class="xl:col-span-3">
+							<label class="opacity-70">Tagline</label>
+							<input type="text" x-model="data.tagline" />
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="reportWrapper" class="py-6 container mx-auto">
+				<div
+					x-show="!allUsers.length"
+					class="text-center text-xl py-12 opacity-30 flex justify-center items-center gap-3"
+				>
+					<svg
+						class="animate-spin size-5"
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+					>
+						<circle
+							class="opacity-25"
+							cx="12"
+							cy="12"
+							r="10"
+							stroke="currentColor"
+							stroke-width="4"
+						></circle>
+						<path
+							class="opacity-75"
+							fill="currentColor"
+							d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+						></path>
+					</svg>
+
 					Fetching cards...
 				</div>
 
-				<div class="grid grid-cols-3">
+				<div
+					x-cloak
+					x-show="!users.length && searchQuery.length"
+					class="text-center text-xl py-12 text-black/50"
+				>
+					No results matching
+					<span
+						x-text="searchQuery"
+						class="font-semibold italic"
+					></span>
+
+					<p>
+						<button
+							x-on:click="searchQuery = ''; typeFilter = ''"
+							class="text-primary"
+						>
+							Reset filters
+						</button>
+					</p>
+				</div>
+
+				<div class="flex justify-center flex-wrap gap-2">
 					<template x-for="user in users">
 						<div class="card-item" x-data="card()">
 							<div
@@ -260,7 +1320,10 @@
 												class="relative mt-2 text-4xl text-centers great font-bold leading-tight"
 												style="letter-spacing: 0.1em"
 											>
-												<span class="great -ml-3">
+												<span
+													class="great -ml-3"
+													x-text="data.groom"
+												>
 													Gilbert
 												</span>
 												<br />
@@ -269,7 +1332,10 @@
 												>
 													Weds
 												</span>
-												<span class="ml-12 great">
+												<span
+													class="ml-12 great"
+													x-text="data.bride"
+												>
 													Tausi
 												</span>
 											</h5>
@@ -279,12 +1345,14 @@
 											>
 												<span
 													class="shidden text-sm font-bold uppercase tracking-wide"
+													x-text="data.date"
 												>
 													28th September
 												</span>
 
 												<span
 													class="shidden text-sm font-light uppercases tracking-wide"
+													x-text="data.bibleVerse"
 												>
 													PROV 18:22
 												</span>
@@ -314,24 +1382,20 @@
 									<div
 										class="pt-1 mt-24 px-4 text-center text-black text-opacity-75 leading-loose font-serif text-sm"
 									>
-										Dear
+										<span x-text="data.salutation"></span>
 										<span
 											class="font-serif mt-1 text- text-black font-medium"
 										>
-											<span x-show="user.title">
-												&nbsp;
-											</span>
 											<span
+												id="name"
 												class="font-serif font-medium"
 												x-text="user.name"
 											>
 											</span
 											>,
 										</span>
-										the family of Mr. & Mrs. Sylvester
-										Chando warmly invites you to come
-										celebrate with us on this joyous
-										occassion.
+
+										<span x-text="data.message"></span>
 									</div>
 
 									<img
@@ -341,18 +1405,22 @@
 									/>
 
 									<div
-										class="text-black bg-white mt-4 rounded-mds overflow-hidden"
+										class="text-black bg-white mt-4 rounded-mds overflow-hidden relative"
 										styles="color: #41274a"
 									>
 										<div
-											class="bg-primary/[0.1] relative flex items-center text-primary"
+											class="absolute inset-0 bg-primary opacity-[0.1]"
+										></div>
+
+										<div
+											class="relative flex items-center text-primary"
 										>
 											<div
 												class="text-center overflow-hidde absolute left-0 inset-y-0 flex flex-col justify-center items-center"
 												style="width: 93px"
 											>
 												<svg
-													class="absolute text-primary/20"
+													class="absolute text-primary opacity-20"
 													fill="currentColor"
 													viewBox="0 0 200 200"
 													xmlns="http://www.w3.org/2000/svg"
@@ -401,12 +1469,15 @@
 															class="font-bold mx-1 leading-none"
 															>&middot;</span
 														>
-														<span>
+														<span
+															x-text="data.church.time"
+														>
 															10AM - NOON
 														</span>
 													</div>
 													<div
 														class="text-black/70 text-[13px]/[1.13]"
+														x-html="data.church.location"
 													>
 														KKKT Kibamba Kibwegere
 													</div>
@@ -424,10 +1495,15 @@
 															class="font-bold mx-1 leading-none"
 															>&middot;</span
 														>
-														<span> 1PM - 6PM </span>
+														<span
+															x-text="data.reception.time"
+														>
+															1PM - 6PM
+														</span>
 													</div>
 													<div
 														class="text-black/70 text-[13px]/[1.13]"
+														x-html="data.reception.location"
 													>
 														Kibamba Kibwegere<br />
 														Bwawani ( Mtaa wa Amani
@@ -440,16 +1516,8 @@
 
 									<p
 										class="mt-5 px-6 text-black/75 text-xs font-light font-serif text-center"
-									>
-										Come in party decent wear with a shade
-										of
-
-										<span
-											class="font-serif text-primary stext-white spx-0.5 font-bold"
-										>
-											olive
-										</span>
-									</p>
+										x-html="data.tagline"
+									></p>
 
 									<div class="mt-4 mx-4">
 										<span
@@ -459,7 +1527,7 @@
 										</span>
 										<div style="color: rgba(0, 0, 0, 0.6)">
 											<template
-												x-for="contact in rsvpContacts"
+												x-for="contact in data.rsvpContacts"
 											>
 												<div>
 													<span
@@ -482,7 +1550,8 @@
 									</div>
 
 									<div class="mt-3 ml-4 text-xs text-primary">
-										S/N: <span x-text="user.sn"></span>
+										S/N:
+										<span id="sn" x-text="user.sn"></span>
 
 										<span
 											class="text-black text-xs pl-1 opacity-40"
@@ -509,14 +1578,13 @@
 			</div>
 		</div>
 
-		<!-- <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.3.5/dist/alpine.min.js"></script>
+		<script src="//unpkg.com/alpinejs" defer></script>
 		<script src="https://www.unpkg.com/dom-to-image@2.6.0/dist/dom-to-image.min.js"></script>
-		<script src="https://www.easyproject.cn/easyqrcodejs/easy.qrcode.min.js?v=11"></script> -->
+		<script src="https://www.easyproject.cn/easyqrcodejs/easy.qrcode.min.js?v=11"></script>
 
-		<script src="scripts/alpine.min.js" defer></script>
+		<!-- <script src="scripts/alpine.min.js" defer></script> -->
 		<!-- <script src="scripts/dom-to-image.min.js"></script> -->
-		<script src="scripts/easy.qrcode.min.js"></script>
-		<script src="https://www.unpkg.com/dom-to-image@2.6.0/dist/dom-to-image.min.js"></script>
+		<!-- <script src="scripts/easy.qrcode.min.js"></script> -->
 
 		<script>
 			const users = [
@@ -952,14 +2020,42 @@
 			function cards() {
 				return {
 					downloading: false,
-					rsvpContacts: [
-						{ name: "Gidion Chando", phone: "0678 888 028" },
-						{ name: "Nelson Malekela", phone: "0714 907 734" },
-						{ name: "Jackson Twalipo", phone: "0767 188 777" },
-					],
 					searchQuery: "",
 					typeFilter: "",
 					allUsers: [],
+					theme: {
+						color: "#95b85d",
+						background: ["#95b85d", "#749d45"],
+						border: ["#b3b85d", "#226271"],
+					},
+					data: {
+						groom: "Gilbert",
+						bride: "Tausi",
+						date: "28th September",
+						bibleVerse: "Prov 18:22",
+						salutation: "Dear",
+						message:
+							"the family of Mr. & Mrs. Sylvester Chando warmly invites you to come celebrate with us on this joyous occassion.",
+						// salutation: "Mpendwa",
+						// message:
+						// 	"familia ya Bw. & Bi. Sylvester Chando wanayo furaha kukukaribisha kujumuika nasi kwenye harusi ya watoto wetu wapendwa.",
+						// tagline: `Come in party decent wear with a shade of <span class="font-serif text-primary stext-white spx-0.5 font-bold">olive</span>`,
+						tagline: "Children are loved but not invited.",
+						church: {
+							time: "10AM - NOON",
+							location: "KKKT Kibamba Kibwegere",
+						},
+						reception: {
+							time: "1PM - 6PM",
+							location:
+								"Kibamba Kibwegere<br />Bwawani ( Mtaa wa Amani )",
+						},
+						rsvpContacts: [
+							{ name: "Gidion Chando", phone: "0678 888 028" },
+							{ name: "Nelson Malekela", phone: "0714 907 734" },
+							{ name: "Jackson Twalipo", phone: "0767 188 777" },
+						],
+					},
 					get users() {
 						return this.allUsers.filter((user) => {
 							if (this.typeFilter) {
@@ -975,11 +2071,34 @@
 						});
 					},
 					init() {
+						let theme;
+						try {
+							this.theme = JSON.parse(
+								localStorage.cardGeneratorTheme
+							);
+						} catch (e) {}
+						this.$watch("theme", () => {
+							localStorage.cardGeneratorTheme = JSON.stringify(
+								this.theme
+							);
+						});
+
+						let data;
+						try {
+							this.data = JSON.parse(
+								localStorage.cardGeneratorData
+							);
+						} catch (e) {}
+						this.$watch("data", () => {
+							localStorage.cardGeneratorData = JSON.stringify(
+								this.data
+							);
+						});
+
 						let users = [];
 						try {
 							users = JSON.parse(localStorage.cardGeneratorUsers);
 						} catch (e) {}
-
 						this.allUsers = users;
 
 						const id =
@@ -1029,43 +2148,45 @@
 
 			function card() {
 				return {
-					init() {
-						var user = this.$data.user;
-						var el = this.$el;
-						var qrEl = el.querySelector("#qr");
-						var code = user.code;
+					setQr() {
+						const data = this.$data;
+						const el = this.$el;
+						const code = data.user.code;
+						const qrEl = el.querySelector("#qr");
+						qrEl.innerHTML = "";
 
-						el.setAttribute(
-							"data-file-name",
-							[user.sn, user.name].join(" ")
-						);
-
-						const config = {
+						new QRCode(qrEl, {
 							text: code,
 							width: 72,
 							height: 72,
 							quietZone: 0,
-							colorDark: "rgba(149, 184, 93, 1)",
+							colorDark: data.theme.color,
 							// colorDark: "#510216",
 							colorLight: "#ffffff",
-							PI: "rgba(149, 184, 93, 0.85)",
+							PI: data.theme.color,
 							correctLevel: QRCode.CorrectLevel.H, // L, M, Q, H
-						};
+						});
+					},
+					init() {
+						this.setQr();
 
-						var t = new QRCode(qrEl, config);
+						this.$watch("$data.theme.color", () => {
+							this.setQr();
+						});
 					},
 				};
 			}
 		</script>
 
-		<script type="module">
-			// import { downloadZip } from "https://cdn.jsdelivr.net/npm/client-zip/index.js"
-			import { downloadZip } from "./scripts/client-zip.min.js";
+		<script type="module" async>
+			import { downloadZip } from "https://cdn.jsdelivr.net/npm/client-zip/index.js";
+			// import { downloadZip } from "./scripts/client-zip.min.js";
 
 			async function getCardImage(card, name) {
 				const scale = 2;
 				const dataUrl = await domtoimage.toPng(card, {
-					width: card.clientWidth * scale * 1.04,
+					// width: card.clientWidth * scale * 1.04,
+					width: card.clientWidth * scale,
 					height: card.clientHeight * scale,
 					style: {
 						position: "fixed",
@@ -1094,7 +2215,11 @@
 						(card) =>
 							getCardImage(
 								card,
-								card.getAttribute("data-file-name")
+								[
+									card.querySelector("#sn").textContent,
+									card.querySelector("#name").textContent,
+								].join(" ")
+								// card.getAttribute("data-file-name")
 							)
 					)
 				);
