@@ -88,7 +88,12 @@
 			}
 		</style>
 
-		<div class="grid grid-cols-12 gap-6 items-start p-8" x-data="cards()">
+		<div
+			class="grid grid-cols-12 gap-6 items-start p-8"
+			x-data="cards()"
+			x-on:downloading-cards.window="downloading = true"
+			x-on:cards-downloaded.window="downloading = false"
+		>
 			<div
 				class="col-span-3 sticky top-10 bg-white shadow-sm isolate z-20 border rounded-lg overflow-hidden"
 			>
@@ -138,6 +143,7 @@
 						data-component-field="{id: 'action'}"
 					>
 						<svg
+							x-show="!downloading"
 							class="mr-2 size-5"
 							fill="none"
 							stroke="currentColor"
@@ -152,12 +158,18 @@
 							></path>
 						</svg>
 
-						Download Cards
+						<span
+							x-text="downloading ? 'Downloading...' : 'Download Cards'"
+						></span>
 					</button>
 				</div>
 			</div>
 
 			<div id="reportWrapper" class="col-span-9">
+				<div x-show="!users.length" class="text-center text-xl py-12">
+					Fetching cards...
+				</div>
+
 				<div class="grid grid-cols-3">
 					<template x-for="user in users">
 						<div class="card-item" x-data="card()">
@@ -219,16 +231,16 @@
 											</svg>
 
 											<div
-											class="absolute inset-0 -bottom-16 invert opacity-10 sopacity-[0.03] rounded-full"
-											style="
-												rotate: 14deg;
-												left: -10px;
-												right: -60px;
-												top: -160px;
-												background-size: 150px;
-												background-image: url('img/waves.png');
-											"
-										></div>
+												class="absolute inset-0 -bottom-16 invert opacity-10 sopacity-[0.03] rounded-full"
+												style="
+													rotate: 14deg;
+													left: -10px;
+													right: -60px;
+													top: -160px;
+													background-size: 150px;
+													background-image: url('img/waves.png');
+												"
+											></div>
 
 											<!-- <div
 												class="absolute inset-0 bg-cover sgrayscale"
@@ -241,7 +253,6 @@
 									</div>
 
 									<div class="z-10 relative">
-
 										<div
 											class="relative flex py-1 items-center justify-between px-8 text-white tracking-widest"
 										>
@@ -940,16 +951,17 @@
 
 			function cards() {
 				return {
+					downloading: false,
 					rsvpContacts: [
 						{ name: "Gidion Chando", phone: "0678 888 028" },
 						{ name: "Nelson Malekela", phone: "0714 907 734" },
 						{ name: "Jackson Twalipo", phone: "0767 188 777" },
 					],
-					searchQuery: "Walter ",
-					// users: users.slice(2, 3),
+					searchQuery: "",
 					typeFilter: "",
+					allUsers: [],
 					get users() {
-						return users.filter((user) => {
+						return this.allUsers.filter((user) => {
 							if (this.typeFilter) {
 								if (user.type != this.typeFilter) return false;
 							}
@@ -961,6 +973,56 @@
 
 							return true;
 						});
+					},
+					init() {
+						let users = [];
+						try {
+							users = JSON.parse(localStorage.cardGeneratorUsers);
+						} catch (e) {}
+
+						this.allUsers = users;
+
+						const id =
+							"11hOpvU8Ejjxit5rAl0SSEpNFYtFG6v_gmT2eukmrZXY";
+						const gid = "0";
+						var url = `https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:json&tq&gid=${gid}`;
+						fetch(url)
+							.then((response) => response.text())
+							.then((data) => {
+								const res = JSON.parse(
+									data.substring(47).slice(0, -2)
+								);
+								const { cols, rows } = res.table;
+								const users = rows.map(({ c: row }, index) => {
+									return row.reduce(
+										(agg, entry, index) => {
+											const key = cols[index].label;
+											if (!key) return agg;
+
+											const { f, v } = entry || {};
+											let value = "";
+											try {
+												value = f ? f : v;
+											} catch (e) {}
+
+											return {
+												...agg,
+												[key.toLowerCase()]: value,
+											};
+										},
+										{
+											sn: 100 + index,
+											code: Math.floor(
+												1000 + Math.random() * 9000
+											),
+										}
+									);
+								});
+
+								localStorage.cardGeneratorUsers =
+									JSON.stringify(users);
+								this.allUsers = users;
+							});
 					},
 				};
 			}
@@ -994,59 +1056,59 @@
 					},
 				};
 			}
+		</script>
 
-			async function downloadCards() {
-				document.querySelectorAll(".card-item").forEach(downloadCard);
+		<script type="module">
+			// import { downloadZip } from "https://cdn.jsdelivr.net/npm/client-zip/index.js"
+			import { downloadZip } from "./scripts/client-zip.min.js";
+
+			async function getCardImage(card, name) {
+				const scale = 2;
+				const dataUrl = await domtoimage.toPng(card, {
+					width: card.clientWidth * scale * 1.04,
+					height: card.clientHeight * scale,
+					style: {
+						position: "fixed",
+						top: 12,
+						left: 12,
+						zIndex: 20,
+						transform: "scale(" + scale + ")",
+						transformOrigin: "top left",
+					},
+				});
+				const response = await fetch(dataUrl);
+				const blob = await response.blob();
+
+				return {
+					name: name + ".png",
+					lastModified: new Date(),
+					input: blob,
+				};
 			}
 
-			const names = users.map(({ name, title }) =>
-				`${title} ${name}`.trim()
-			);
-			const sns = users.map(({ sn }) => sn);
-			async function downloadCard(card, index) {
-				const name = card.getAttribute("data-file-name");
-				getReportImage(card, name);
-			}
+			window.downloadCards = async function () {
+				window.dispatchEvent(new CustomEvent("downloading-cards"));
 
-			async function getReportImage(card, name) {
-				try {
-					const scale = 2;
-					const dataUrl = await domtoimage.toPng(card, {
-						width: card.clientWidth * scale * 1.04,
-						height: card.clientHeight * scale,
-						style: {
-							position: "fixed",
-							top: 12,
-							left: 12,
-							zIndex: 20,
-							transform: "scale(" + scale + ")",
-							transformOrigin: "top left",
-						},
-					});
-					const response = await fetch(dataUrl);
-					const blob = await response.blob();
+				const cards = await Promise.all(
+					Array.from(document.querySelectorAll(".card-item")).map(
+						(card) =>
+							getCardImage(
+								card,
+								card.getAttribute("data-file-name")
+							)
+					)
+				);
 
-					const link = document.createElement("a");
-					link.href = window.URL.createObjectURL(blob);
-					link.href = dataUrl;
-					link.download = name + ".png";
+				const blob = await downloadZip(cards).blob();
+				const link = document.createElement("a");
 
-					document.body.appendChild(link);
-					link.click();
-					link.remove();
-				} catch (error) {
-					console.log("Card error: ", error.target, card);
-				}
+				link.href = URL.createObjectURL(blob);
+				link.download = "cards.zip";
+				link.click();
+				link.remove();
 
-				/*
-						                   var fd = new FormData();
-						                   fd.append('data', blob);
-						                   const res = await postRequest("/studio/analytics/downloadReportAsPdf", fd);
-
-						                   pdfReportBlob = new Blob([res]);
-						                   return pdfReportBlob;
-						               */
-			}
+				window.dispatchEvent(new CustomEvent("cards-downloaded"));
+			};
 		</script>
 	</body>
 </html>
