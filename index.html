@@ -32,50 +32,6 @@
 			rel="stylesheet"
 		/>
 
-		<style>
-			:root {
-				/* --primary-color: 149 184 93; */
-				--primary-color: #95b85d;
-				--border-gradient-from: #b3b85d;
-				--border-gradient-to: #226271;
-				--gradient-from: #95b85d;
-				--gradient-to: #749d45;
-			}
-
-			@font-face {
-				font-family: "Great Vibes";
-				src: url(fonts/Great_Vibes/GreatVibes-Regular.ttf);
-			}
-
-			.great {
-				font-family: "Great Vibes", sans-serif;
-			}
-
-			.paris {
-				font-family: "Parisienne", cursive;
-			}
-
-			.mont,
-			.mont * {
-				font-family: "Open Sans", "Helvetica Neue", sans-serif;
-			}
-
-			input[type="text"],
-			input[type="search"] {
-				width: 100%;
-				border: 1px solid #ddd;
-				border-radius: 8px;
-			}
-
-			input[type="search"]::placeholder {
-				color: rgba(0, 0, 0, 0.4);
-			}
-
-			[x-cloak] {
-				display: none;
-			}
-		</style>
-
 		<!-- <script src="scripts/tailwind-cdn.js"></script> -->
 		<style>
 			*,
@@ -856,6 +812,56 @@
 			}
 		</style>
 
+		<style>
+			:root {
+				/* --primary-color: 149 184 93; */
+				--primary-color: #333333;
+				--border-gradient-from: #b3b85d;
+				--border-gradient-to: #226271;
+				--gradient-from: #333333;
+				--gradient-to: #749d45;
+			}
+
+			@font-face {
+				font-family: "Great Vibes";
+				src: url(fonts/Great_Vibes/GreatVibes-Regular.ttf);
+			}
+
+			.great {
+				font-family: "Great Vibes", sans-serif;
+			}
+
+			.paris {
+				font-family: "Parisienne", cursive;
+			}
+
+			.mont,
+			.mont * {
+				font-family: "Open Sans", "Helvetica Neue", sans-serif;
+			}
+
+			textarea,
+			input[type="text"],
+			input[type="search"] {
+				width: 100%;
+				border: 1px solid #ddd !important;
+				border-radius: 8px !important;
+			}
+
+			textarea {
+				field-sizing: content;
+				resize: none !important;
+			}
+
+			input[type="search"]::placeholder {
+				color: rgba(0, 0, 0, 0.4);
+			}
+
+			[x-cloak] {
+				display: none;
+			}
+		</style>
+
 		<script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,container-queries"></script>
 
 		<script>
@@ -872,320 +878,85 @@
 			};
 		</script>
 	</head>
-	<body class="bg-black/5">
-		<div
-			x-data="cards()"
-			x-on:downloading-cards.window="downloading = true"
-			x-on:cards-downloaded.window="downloading = false"
-			x-bind:style="{
-				'--primary-color': theme.color,
-				'--gradient-from': theme.background[0],
-				'--gradient-to': theme.background[1],
-				'--border-gradient-from': theme.border[0],
-				'--border-gradient-to': theme.border[1],
-			}"
-		>
-			<div class="sticky top-0 bg-white shadow-sm isolate z-20 border-b">
+	<body
+		class="bg-black/5 overflow-x-hidden"
+		x-data="cards()"
+		x-on:downloading-cards.window="downloading = true"
+		x-on:cards-downloaded.window="downloading = false"
+		x-bind:style="{
+		'--primary-color': theme.color,
+		'--gradient-from': theme.background[0],
+		'--gradient-to': theme.background[1],
+		'--border-gradient-from': theme.border[0],
+		'--border-gradient-to': theme.border[1],
+	}"
+	>
+		<div class="sticky top-0 bg-white shadow-sm isolate z-20 border-b">
+			<div
+				class="py-3 px-3 lg:px-0 container mx-auto flex gap-3 items-center justify-between flex-wrap"
+			>
+				<div class="flex items-center gap-2">
+					<img class="size-7" src="img//icons/icon-192.png" alt="" />
+					<h2 class="flex-shrink-0 text-2xl/none font-bold">Kadi</h2>
+				</div>
+
 				<div
-					class="py-3 container mx-auto flex gap-3 items-center justify-center md:justify-between flex-wrap"
+					class="h-10 inline-flex items-center rounded-md overflow-hidden border divide-x divide-black/20 border-black/20"
 				>
-					<h2 class="flex-shrink-0 text-2xl/none font-bold">
-						Card Creator
-					</h2>
-
-					<div class="flex flex-wrap gap-3 md:gap-8 justify-center">
-						<div class="relative" style="width: 300px">
-							<!-- <label class="opacity-70">Search attendees: </label> -->
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke-width="1.5"
-								stroke="currentColor"
-								class="size-5 absolute inset-y-0 my-auto left-3 opacity-50 pointer-events-none"
-							>
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-								/>
-							</svg>
-
-							<input
-								type="search"
-								placeholder="Type to search..."
-								x-model="searchQuery"
-								class="pl-10 bg-black/[0.03]"
-							/>
-						</div>
-
-						<div class="my-0.5">
-							<div
-								class="h-10 inline-flex items-center rounded-md overflow-hidden border divide-x divide-black/20 border-black/20"
-								x-data="{filters: ['Single', 'Double']}"
-							>
-								<label
-									class="bg-primary text-white !border-primary h-full px-4 cursor-pointer text-xs font-medium tracking-wide flex items-center uppercase"
-									x-bind:class="!typeFilter ? 'bg-primary text-white !border-primary' : 'bg-transparent !text-black/50'"
-									x-on:click="typeFilter = ''"
-								>
-									All
-								</label>
-								<label
-									class="h-full px-4 cursor-pointer text-xs font-medium tracking-wide flex items-center uppercase border-l"
-									x-bind:class="typeFilter == 'Single' ? 'bg-primary text-white !border-primary' : 'text-black/50'"
-									x-on:click="typeFilter = 'Single'"
-								>
-									Single
-								</label>
-								<label
-									class="h-full px-4 cursor-pointer text-xs font-medium tracking-wide flex items-center uppercase border-l"
-									x-bind:class="typeFilter == 'Double' ? 'bg-primary text-white !border-primary' : 'text-black/50'"
-									x-on:click="typeFilter = 'Double'"
-								>
-									Double
-								</label>
-							</div>
-						</div>
-					</div>
-
-					<button
-						onclick="downloadCards()"
-						class="focus:outline-none flex gap-2.5 items-center justify-center px-6 h-10 uppercase text-sm tracking-wide font-semibold bg-primary text-white rounded-full"
-						x-bind:class="downloading && 'opacity-80 pointer-events-none'"
-						data-component-field="{id: 'action'}"
-						style="width: 220px"
+					<label
+						class="bg-primary text-white h-full w-24 cursor-pointer text-xs font-medium tracking-wide flex items-center justify-center uppercase"
+						x-bind:class="mode == 'data' ? 'bg-primary text-white ' : 'bg-transparent !text-black/50'"
+						x-on:click="mode = 'data'"
 					>
 						<svg
-							x-cloak
-							x-show="downloading"
-							class="animate-spin size-5"
 							xmlns="http://www.w3.org/2000/svg"
 							fill="none"
 							viewBox="0 0 24 24"
-						>
-							<circle
-								class="opacity-25"
-								cx="12"
-								cy="12"
-								r="10"
-								stroke="currentColor"
-								stroke-width="4"
-							></circle>
-							<path
-								class="opacity-75"
-								fill="currentColor"
-								d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-							></path>
-						</svg>
-
-						<svg
-							x-show="!downloading"
-							class="size-5"
-							fill="none"
+							stroke-width="1.5"
 							stroke="currentColor"
-							viewBox="0 0 24 24"
-							xmlns="http://www.w3.org/2000/svg"
+							class="size-4 mr-1.5"
 						>
 							<path
 								stroke-linecap="round"
 								stroke-linejoin="round"
-								stroke-width="2"
-								d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-							></path>
+								d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 0 1-1.125-1.125M3.375 19.5h7.5c.621 0 1.125-.504 1.125-1.125m-9.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-7.5A1.125 1.125 0 0 1 12 18.375m9.75-12.75c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125m19.5 0v1.5c0 .621-.504 1.125-1.125 1.125M2.25 5.625v1.5c0 .621.504 1.125 1.125 1.125m0 0h17.25m-17.25 0h7.5c.621 0 1.125.504 1.125 1.125M3.375 8.25c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m17.25-3.75h-7.5c-.621 0-1.125.504-1.125 1.125m8.625-1.125c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125M12 10.875v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 10.875c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125M13.125 12h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125M20.625 12c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5M12 14.625v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 14.625c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125m0 1.5v-1.5m0 0c0-.621.504-1.125 1.125-1.125m0 0h7.5"
+							/>
 						</svg>
 
-						<span
-							x-text="downloading ? 'Downloading' : 'Download Cards'"
-						>
-							Download Cards
-						</span>
-					</button>
-				</div>
-			</div>
-
-			<div class="bg-black/5 pt-3 pb-5" x-cloak>
-				<div
-					class="container mx-auto flex gap-3 items-center justify-center flex-wrap"
-				>
-					<div
-						class="px-3 lg:px-0 flex flex-wrap md:grid grid-cols-2 xl:grid-cols-12 gap-3"
+						Data
+					</label>
+					<label
+						class="h-full w-24 cursor-pointer text-xs font-medium tracking-wide flex items-center justify-center uppercase"
+						x-bind:class="mode == 'design' ? 'bg-primary text-white ' : 'text-black/50'"
+						x-on:click="mode = 'design'"
 					>
-						<div class="col-span-4 grid grid-cols-3 gap-3">
-							<div>
-								<label class="opacity-70">Theme Color</label>
-								<div class="relative flex">
-									<input
-										class="h-10 pointer-events-none"
-										type="text"
-										x-bind:value="theme.color"
-									/>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke-width="1.5"
+							stroke="currentColor"
+							class="size-4 mr-1.5"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="M4.098 19.902a3.75 3.75 0 0 0 5.304 0l6.401-6.402M6.75 21A3.75 3.75 0 0 1 3 17.25V4.125C3 3.504 3.504 3 4.125 3h5.25c.621 0 1.125.504 1.125 1.125v4.072M6.75 21a3.75 3.75 0 0 0 3.75-3.75V8.197M6.75 21h13.125c.621 0 1.125-.504 1.125-1.125v-5.25c0-.621-.504-1.125-1.125-1.125h-4.072M10.5 8.197l2.88-2.88c.438-.439 1.15-.439 1.59 0l3.712 3.713c.44.44.44 1.152 0 1.59l-2.879 2.88M6.75 17.25h.008v.008H6.75v-.008Z"
+							/>
+						</svg>
 
-									<div
-										class="absolute inset-y-3 right-2 flex items-center"
-									>
-										<label
-											class="block size-6 rounded relative"
-											x-bind:style="{backgroundColor: theme.color}"
-										>
-											<input
-												type="color"
-												x-model="theme.color"
-												class="absolute inset-0 opacity-0 pointer-events-none"
-											/>
-										</label>
-									</div>
-								</div>
-							</div>
-
-							<div>
-								<label class="opacity-70">Background</label>
-								<div class="relative flex">
-									<div
-										class="absolute inset-y-3 left-2 flex items-center"
-									>
-										<label
-											class="block size-6 rounded border border-white relative"
-											x-bind:style="{backgroundColor: theme.background[0]}"
-										>
-											<input
-												type="color"
-												x-model="theme.background[0]"
-												class="absolute inset-0 opacity-0 pointer-events-none"
-											/>
-										</label>
-									</div>
-
-									<input
-										class="flex-1 pl-9 h-10 pointer-events-none"
-										type="text"
-										style="
-											background: linear-gradient(
-												120deg,
-												var(--gradient-from) 0%,
-												var(--gradient-to) 100%
-											);
-										"
-									/>
-
-									<div
-										class="absolute inset-y-3 right-2 flex items-center"
-									>
-										<label
-											class="block size-6 rounded border border-white relative"
-											x-bind:style="{backgroundColor: theme.background[1]}"
-										>
-											<input
-												type="color"
-												x-model="theme.background[1]"
-												class="absolute inset-0 opacity-0 pointer-events-none"
-											/>
-										</label>
-									</div>
-								</div>
-							</div>
-
-							<div>
-								<label class="opacity-70">Border</label>
-								<div class="relative flex">
-									<div
-										class="absolute inset-y-3 left-2 flex items-center"
-									>
-										<label
-											class="block size-6 rounded border border-white relative"
-											x-bind:style="{backgroundColor: theme.border[0]}"
-										>
-											<input
-												type="color"
-												x-model="theme.border[0]"
-												class="absolute inset-0 opacity-0 pointer-events-none"
-											/>
-										</label>
-									</div>
-
-									<input
-										class="flex-1 pl-9 h-10 pointer-events-none"
-										type="text"
-										style="
-											background: linear-gradient(
-												120deg,
-												var(--border-gradient-from) 0%,
-												var(--border-gradient-to) 100%
-											);
-										"
-									/>
-
-									<div
-										class="absolute inset-y-3 right-2 flex items-center"
-									>
-										<label
-											class="block size-6 rounded border border-white relative"
-											x-bind:style="{backgroundColor: theme.border[1]}"
-										>
-											<input
-												type="color"
-												x-model="theme.border[1]"
-												class="absolute inset-0 opacity-0 pointer-events-none"
-											/>
-										</label>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div class="xl:col-span-2">
-							<label class="opacity-70">Groom</label>
-							<input type="text" x-model="data.groom" />
-						</div>
-						<div class="xl:col-span-2">
-							<label class="opacity-70">Bride</label>
-							<input type="text" x-model="data.bride" />
-						</div>
-
-						<div class="xl:col-span-2">
-							<label class="opacity-70">Date</label>
-							<input type="text" x-model="data.date" />
-						</div>
-
-						<div class="xl:col-span-2">
-							<label class="opacity-70">Bible verse</label>
-							<input type="text" x-model="data.bibleVerse" />
-						</div>
-
-						<div class="xl:col-span-1">
-							<label class="opacity-70">Salutation</label>
-							<input type="text" x-model="data.salutation" />
-						</div>
-
-						<div class="xl:col-span-4">
-							<label class="opacity-70">Message</label>
-							<input type="text" x-model="data.message" />
-						</div>
-
-						<div class="xl:col-span-2">
-							<label class="opacity-70">Church Time</label>
-							<input type="text" x-model="data.church.time" />
-						</div>
-
-						<div class="xl:col-span-2">
-							<label class="opacity-70">Reception Time</label>
-							<input type="text" x-model="data.reception.time" />
-						</div>
-
-						<div class="xl:col-span-3">
-							<label class="opacity-70">Tagline</label>
-							<input type="text" x-model="data.tagline" />
-						</div>
-					</div>
+						Design
+					</label>
 				</div>
-			</div>
 
-			<div id="reportWrapper" class="py-6 container mx-auto">
-				<div
-					x-show="!allUsers.length"
-					class="text-center text-xl py-12 opacity-30 flex justify-center items-center gap-3"
+				<button
+					onclick="downloadCards()"
+					class="gap-2 flex items-center justify-center w-10 lg:w-[220px] lg:px-4 h-10 uppercase text-xs lg:text-sm tracking-wide font-semibold bg-primary text-white rounded-full focus:outline-none"
+					x-bind:class="downloading && 'opacity-80 pointer-events-none'"
 				>
 					<svg
+						x-cloak
+						x-show="downloading"
 						class="animate-spin size-5"
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
@@ -1206,374 +977,1076 @@
 						></path>
 					</svg>
 
-					Fetching cards...
-				</div>
+					<svg
+						x-show="!downloading"
+						class="size-5"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+						></path>
+					</svg>
 
-				<div
-					x-cloak
-					x-show="!users.length && searchQuery.length"
-					class="text-center text-xl py-12 text-black/50"
-				>
-					No results matching
 					<span
-						x-text="searchQuery"
-						class="font-semibold italic"
-					></span>
+						class="hidden lg:inline"
+						x-text="downloading ? 'Downloading' : 'Download Cards'"
+					>
+						Download Cards
+					</span>
+				</button>
+			</div>
+		</div>
 
-					<p>
-						<button
-							x-on:click="searchQuery = ''; typeFilter = ''"
-							class="text-primary"
+		<div
+			x-show="!allUsers.length"
+			class="col-span-12 text-center text-xl py-12 opacity-30 flex justify-center items-center gap-3"
+		>
+			<svg
+				class="animate-spin size-5"
+				xmlns="http://www.w3.org/2000/svg"
+				fill="none"
+				viewBox="0 0 24 24"
+			>
+				<circle
+					class="opacity-25"
+					cx="12"
+					cy="12"
+					r="10"
+					stroke="currentColor"
+					stroke-width="4"
+				></circle>
+				<path
+					class="opacity-75"
+					fill="currentColor"
+					d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+				></path>
+			</svg>
+
+			Fetching attendees...
+		</div>
+
+		<div x-cloak x-show="allUsers.length">
+			<div
+				class="lg:grid grid-cols-12 gap-8 items-start h-full container mx-auto"
+			>
+				<div class="col-span-8 border-r pl-0 lg:pr-8 py-6 lg:py-8">
+					<div x-show="mode == 'data'" class="lg:min-h-screen">
+						<!-- <h3 class="text-xl/none font-semibold">Attendees</h3> -->
+
+						<div
+							class="flex items-center flex-wrap gap-3 justify-between border-b pb-4"
 						>
-							Reset filters
-						</button>
-					</p>
-				</div>
-
-				<div class="flex justify-center flex-wrap gap-2">
-					<template x-for="user in users">
-						<div class="card-item" x-data="card()">
 							<div
-								class="relative rounded-xl overflow-hidden"
-								style="
-									width: 375px;
-									height: 667px;
-									padding: 0.35rem;
-									background: linear-gradient(
-										120deg,
-										var(--border-gradient-from) 0%,
-										var(--border-gradient-to) 100%
-									);
-								"
+								class="h-10 inline-flex items-center rounded-md overflow-hidden border divide-x divide-black/20 border-black/20"
 							>
-								<div
-									class="bg-white h-full rounded-lg text-primary"
+								<label
+									class="bg-primary text-white h-full px-3 cursor-pointer text-xs font-medium tracking-wide flex items-center uppercase"
+									x-bind:class="!typeFilter ? 'bg-primary text-white ' : 'bg-transparent !text-black/50'"
+									x-on:click="typeFilter = ''"
 								>
-									<div class="absolute inset-x-0 z-10">
-										<div
-											class="relative -mt-[95px] scale-[1.1]"
+									All
+								</label>
+								<label
+									class="h-full px-3 cursor-pointer text-xs font-medium tracking-wide flex items-center uppercase border-l"
+									x-bind:class="typeFilter == 'Single' ? 'bg-primary text-white ' : 'text-black/50'"
+									x-on:click="typeFilter = 'Single'"
+								>
+									Single
+								</label>
+								<label
+									class="h-full px-3 cursor-pointer text-xs font-medium tracking-wide flex items-center uppercase border-l"
+									x-bind:class="typeFilter == 'Double' ? 'bg-primary text-white ' : 'text-black/50'"
+									x-on:click="typeFilter = 'Double'"
+								>
+									Double
+								</label>
+							</div>
+
+							<div class="relative" style="width: 300px">
+								<!-- <label class="opacity-70">Search attendees: </label> -->
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke-width="1.5"
+									stroke="currentColor"
+									class="size-5 absolute inset-y-0 my-auto left-3 opacity-50 pointer-events-none"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+									/>
+								</svg>
+
+								<input
+									type="search"
+									placeholder="Type to search..."
+									x-model="searchQuery"
+									class="pl-10 bg-black/[0.03]"
+								/>
+							</div>
+						</div>
+
+						<table class="w-full text-left">
+							<tr>
+								<template x-for="col in columns">
+									<th x-text="col" class="p-2 border-b"></th>
+								</template>
+							</tr>
+
+							<template x-for="(user, i) in filteredUsers">
+								<tr>
+									<template x-for="col in columns">
+										<td
+											x-html="user[col] || '--'"
+											class="p-2"
+											x-bind:class="i%2 != 0 && 'bg-black/5'"
+										></td>
+									</template>
+								</tr>
+							</template>
+						</table>
+
+						<div
+							x-cloak
+							x-show="!users.length && searchQuery.length"
+							class="text-center text-xl py-12 text-black/50"
+						>
+							No results matching
+							<span
+								x-text="searchQuery"
+								class="font-semibold italic"
+							></span>
+
+							<p>
+								<button
+									x-on:click="searchQuery = ''; typeFilter = ''"
+									class="text-primary"
+								>
+									Reset filters
+								</button>
+							</p>
+						</div>
+					</div>
+
+					<div
+						x-show="mode == 'design'"
+						class="flex gap-3 items-center justify-center flex-wrap"
+					>
+						<div class="px-3 lg:px-0">
+							<div>
+								<div
+									class="mb-3 flex items-center justify-between flex-wrap border-b pb-3"
+								>
+									<h3
+										class="col-span-2 text-xl/none font-semibold"
+									>
+										Theme
+									</h3>
+
+									<div
+										class="flex items-center flex-wrap gap-3 h-9"
+									>
+										<label
+											class="border border-black/50 rounded-md hover:bg-black/5 h-full px-3 cursor-pointer text-xs font-medium tracking-wide flex items-center gap-1.5 uppercase"
 										>
 											<svg
 												xmlns="http://www.w3.org/2000/svg"
-												viewBox="0 0 860.683 617.967"
-												fill="currentColor"
+												fill="none"
+												viewBox="0 0 24 24"
+												stroke-width="1.5"
+												stroke="currentColor"
+												class="size-4"
 											>
-												<defs>
-													<linearGradient
-														id="fillGradient"
-														gradientTransform="rotate(90)"
-													>
-														<stop
-															offset="5%"
-															style="
-																stop-color: var(
-																	--gradient-from
-																);
-															"
-														/>
-														<!-- stop-color="gold" -->
-														<!-- stop-color="red" -->
-														<stop
-															offset="95%"
-															style="
-																stop-color: var(
-																	--gradient-to
-																);
-															"
-														/>
-													</linearGradient>
-												</defs>
-
 												<path
-													fill="url(#fillGradient)"
-													d="M 860.683 69.286 C 812.716 44.077 854.974 425.877 835.944 498.995 C 816.914 571.109 740.794 625.195 671.684 617.182 C 601.573 609.169 537.472 540.06 415.284 500.998 C 294.087 461.936 114.804 451.92 59.716 379.806 C 3.627 306.69 -40.442 89.298 59.716 21.191 C 160.877 -47.923 862.151 74.612 860.683 69.286 Z"
+													stroke-linecap="round"
+													stroke-linejoin="round"
+													d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25"
 												/>
 											</svg>
 
-											<div
-												class="absolute inset-0 -bottom-16 invert opacity-10 sopacity-[0.03] rounded-full"
-												style="
-													rotate: 14deg;
-													left: -10px;
-													right: -60px;
-													top: -160px;
-													background-size: 150px;
-													background-image: url('img/waves.png');
-												"
-											></div>
+											Import
 
-											<!-- <div
-												class="absolute inset-0 bg-cover sgrayscale"
-												style="
-													background-image: url('img/wedders.png');
-													mix-blend-mode: luminosity;
-												"
-											></div> -->
-										</div>
-									</div>
+											<input
+												class="hidden"
+												type="file"
+												x-on:change="importTheme($event)"
+											/>
+										</label>
 
-									<div class="z-10 relative">
-										<div
-											class="relative flex py-1 items-center justify-between px-8 text-white tracking-widest"
+										<button
+											class="border border-black/50 rounded-md hover:bg-black/5 h-full px-3 cursor-pointer text-xs font-medium tracking-wide flex items-center gap-1.5 uppercase"
+											x-on:click="exportTheme()"
 										>
-											<h5
-												class="relative mt-2 text-4xl text-centers great font-bold leading-tight"
-												style="letter-spacing: 0.1em"
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												fill="none"
+												viewBox="0 0 24 24"
+												stroke-width="1.5"
+												stroke="currentColor"
+												class="size-4"
 											>
-												<span
-													class="great -ml-3"
-													x-text="data.groom"
-												>
-													Gilbert
-												</span>
-												<br />
-												<span
-													class="absolute mt-2 text-xs uppercase font-mono"
-												>
-													Weds
-												</span>
-												<span
-													class="ml-12 great"
-													x-text="data.bride"
-												>
-													Tausi
-												</span>
-											</h5>
+												<path
+													stroke-linecap="round"
+													stroke-linejoin="round"
+													d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15m0-3-3-3m0 0-3 3m3-3V15"
+												/>
+											</svg>
 
-											<div
-												class="absolute top-6 -bottom-8 flex flex-col items-end justify-between right-4 text-right"
-											>
-												<span
-													class="shidden text-sm font-bold uppercase tracking-wide"
-													x-text="data.date"
-												>
-													28th September
-												</span>
+											Export
+										</button>
 
-												<span
-													class="shidden text-sm font-light uppercases tracking-wide"
-													x-text="data.bibleVerse"
-												>
-													PROV 18:22
-												</span>
-											</div>
-										</div>
-									</div>
-
-									<div
-										class="absolute flex items-center top-0 left-0 ml-6 mt-[7.6rem] transform rotate-1"
-									>
-										<div class="mt-2">
-											<div id="qr"></div>
-										</div>
-
-										<div
-											class="mt-1 ml-3 text-black font-light text-[13px] flex flex-col gap-1.5"
+										<button
+											class="border border-black/50 rounded-md hover:bg-black/5 h-full px-3 cursor-pointer text-xs font-medium tracking-wide flex items-center gap-1.5 uppercase"
+											x-on:click="resetTheme()"
 										>
-											<span>Smart Card</span>
-											<span
-												id="code"
-												class="font-semibold text-primary text-base/none tracking-widest"
-												x-text="user.code"
-											></span>
-										</div>
-									</div>
-
-									<div
-										class="pt-1 mt-24 px-4 text-center text-black text-opacity-75 leading-loose font-serif text-sm"
-									>
-										<span x-text="data.salutation"></span>
-										<span
-											class="font-serif mt-1 text- text-black font-medium"
-										>
-											<span
-												id="name"
-												class="font-serif font-medium"
-												x-text="user.name"
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												fill="none"
+												viewBox="0 0 24 24"
+												stroke-width="1.5"
+												stroke="currentColor"
+												class="size-4"
 											>
-											</span
-											>,
-										</span>
+												<path
+													stroke-linecap="round"
+													stroke-linejoin="round"
+													d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
+												/>
+											</svg>
 
-										<span x-text="data.message"></span>
-									</div>
-
-									<img
-										class="mt-3 mb-2 w-40 mx-auto block"
-										src="img/wed-divider.svg"
-										alt=""
-									/>
-
-									<div
-										class="text-black bg-white mt-4 rounded-mds overflow-hidden relative"
-										styles="color: #41274a"
-									>
-										<div
-											class="absolute inset-0 bg-primary opacity-[0.1]"
-										></div>
-
-										<div
-											class="relative flex items-center text-primary"
-										>
-											<div
-												class="text-center overflow-hidde absolute left-0 inset-y-0 flex flex-col justify-center items-center"
-												style="width: 93px"
-											>
-												<svg
-													class="absolute text-primary opacity-20"
-													fill="currentColor"
-													viewBox="0 0 200 200"
-													xmlns="http://www.w3.org/2000/svg"
-													style="
-														width: 350px;
-														left: -140px;
-														transform: rotate(
-															190deg
-														);
-													"
-												>
-													<path
-														d="M31.3,-46.7C32.7,-42.1,20.6,-22.4,19.5,-10C18.5,2.4,28.5,7.5,28.7,10C28.8,12.6,19.1,12.7,12.6,25.8C6.2,38.8,3.1,64.9,-7.4,75.2C-18,85.4,-36,79.8,-44.4,67.4C-52.8,55,-51.7,35.7,-47,22C-42.2,8.2,-33.8,0,-33.9,-14.5C-34,-28.9,-42.5,-49.6,-38.2,-53.2C-34,-56.9,-17,-43.6,-1,-42.2C15,-40.8,30,-51.3,31.3,-46.7Z"
-														transform="translate(100 100)"
-													/>
-												</svg>
-												<span
-													class="z-10 mt-2 leading-none great font-bold"
-													style="font-size: 65px"
-													x-text="user.type[0]"
-												></span>
-
-												<span
-													class="z-10 tracking-widest uppercase"
-													style="
-														font-family: Eudoras;
-														font-size: 14px;
-													"
-													x-text="user.type"
-												>
-												</span>
-											</div>
-
-											<div
-												class="pt-3 pb-4 flex-1 mr-4 mont text-right space-y-3"
-											>
-												<div class="-space-y-1">
-													<div
-														class="inline-flex items-center text-xs tracking-wide"
-													>
-														<span>CHURCH</span>
-														<span
-															style="
-																padding-bottom: 0.1rem;
-															"
-															class="font-bold mx-1 leading-none"
-															>&middot;</span
-														>
-														<span
-															x-text="data.church.time"
-														>
-															10AM - NOON
-														</span>
-													</div>
-													<div
-														class="text-black/70 text-[13px]/[1.13]"
-														x-html="data.church.location"
-													>
-														KKKT Kibamba Kibwegere
-													</div>
-												</div>
-
-												<div class="-space-y-1">
-													<div
-														class="inline-flex items-center text-xs tracking-wide"
-													>
-														<span>RECEPTION</span>
-														<span
-															style="
-																padding-bottom: 0.1rem;
-															"
-															class="font-bold mx-1 leading-none"
-															>&middot;</span
-														>
-														<span
-															x-text="data.reception.time"
-														>
-															1PM - 6PM
-														</span>
-													</div>
-													<div
-														class="text-black/70 text-[13px]/[1.13]"
-														x-html="data.reception.location"
-													>
-														Kibamba Kibwegere<br />
-														Bwawani ( Mtaa wa Amani
-														)
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-
-									<p
-										class="mt-5 px-6 text-black/75 text-xs font-light font-serif text-center"
-										x-html="data.tagline"
-									></p>
-
-									<div class="mt-4 mx-4">
-										<span
-											class="font-serif text-black text-xs font-medium tracking-wide"
-										>
-											RSVP CONTACTS
-										</span>
-										<div style="color: rgba(0, 0, 0, 0.6)">
-											<template
-												x-for="contact in data.rsvpContacts"
-											>
-												<div>
-													<span
-														class="font-serif eading-none text-xs uppercase tracking-wide"
-														x-text="contact.name"
-													>
-													</span>
-													<span
-														class="font-serif leading-none text-sm"
-													>
-														&nbsp; (
-														<span
-															x-text="contact.phone"
-														></span>
-														)
-													</span>
-												</div>
-											</template>
-										</div>
-									</div>
-
-									<div class="mt-3 ml-4 text-xs text-primary">
-										S/N:
-										<span id="sn" x-text="user.sn"></span>
-
-										<span
-											class="text-black text-xs pl-1 opacity-40"
-										>
-											smart card by
-											<span class="mt-1 font-medium">
-												@ipfsoftwares
-											</span>
-										</span>
+											Reset
+										</button>
 									</div>
 								</div>
 
-								<div class="-m">
-									<img
-										class="z-10 absolute right-0 bottom-0 w-64 -mr-32 -mb-10 object-cover"
-										src="img/flowers.webp"
-										alt=""
-									/>
+								<div
+									class="col-span-2 xl:col-span-4 grid grid-cols-3 gap-3"
+								>
+									<div>
+										<label class="opacity-70">Color</label>
+										<div class="relative flex">
+											<input
+												class="h-10 pointer-events-none"
+												type="text"
+												x-bind:value="theme.color"
+											/>
+
+											<div
+												class="absolute inset-y-3 right-2 flex items-center"
+											>
+												<label
+													class="block size-6 rounded relative"
+													x-bind:style="{backgroundColor: theme.color}"
+												>
+													<input
+														type="color"
+														x-model="theme.color"
+														class="absolute inset-0 opacity-0 pointer-events-none"
+													/>
+												</label>
+											</div>
+										</div>
+									</div>
+
+									<div>
+										<label class="opacity-70"
+											>Background</label
+										>
+										<div class="relative flex">
+											<div
+												class="absolute inset-y-3 left-2 flex items-center"
+											>
+												<label
+													class="block size-6 rounded border border-white relative"
+													x-bind:style="{backgroundColor: theme.background[0]}"
+												>
+													<input
+														type="color"
+														x-model="theme.background[0]"
+														class="absolute inset-0 opacity-0 pointer-events-none"
+													/>
+												</label>
+											</div>
+
+											<input
+												class="flex-1 pl-9 h-10 pointer-events-none"
+												type="text"
+												style="
+													background: linear-gradient(
+														120deg,
+														var(--gradient-from) 0%,
+														var(--gradient-to) 100%
+													);
+												"
+											/>
+
+											<div
+												class="absolute inset-y-3 right-2 flex items-center"
+											>
+												<label
+													class="block size-6 rounded border border-white relative"
+													x-bind:style="{backgroundColor: theme.background[1]}"
+												>
+													<input
+														type="color"
+														x-model="theme.background[1]"
+														class="absolute inset-0 opacity-0 pointer-events-none"
+													/>
+												</label>
+											</div>
+										</div>
+									</div>
+
+									<div>
+										<label class="opacity-70">Border</label>
+										<div class="relative flex">
+											<div
+												class="absolute inset-y-3 left-2 flex items-center"
+											>
+												<label
+													class="block size-6 rounded border border-white relative"
+													x-bind:style="{backgroundColor: theme.border[0]}"
+												>
+													<input
+														type="color"
+														x-model="theme.border[0]"
+														class="absolute inset-0 opacity-0 pointer-events-none"
+													/>
+												</label>
+											</div>
+
+											<input
+												class="flex-1 pl-9 h-10 pointer-events-none"
+												type="text"
+												style="
+													background: linear-gradient(
+														120deg,
+														var(
+																--border-gradient-from
+															)
+															0%,
+														var(
+																--border-gradient-to
+															)
+															100%
+													);
+												"
+											/>
+
+											<div
+												class="absolute inset-y-3 right-2 flex items-center"
+											>
+												<label
+													class="block size-6 rounded border border-white relative"
+													x-bind:style="{backgroundColor: theme.border[1]}"
+												>
+													<input
+														type="color"
+														x-model="theme.border[1]"
+														class="absolute inset-0 opacity-0 pointer-events-none"
+													/>
+												</label>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="mt-12">
+								<div
+									class="mb-3 flex items-center justify-between flex-wrap border-b border-black/10 pb-3"
+								>
+									<h3
+										class="col-span-2 text-xl/none font-semibold"
+									>
+										Content
+									</h3>
+									<div
+										class="flex items-center flex-wrap gap-3 h-9"
+									>
+										<label
+											class="border border-black/50 rounded-md hover:bg-black/5 h-full px-3 cursor-pointer text-xs font-medium tracking-wide flex items-center gap-1.5 uppercase"
+										>
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												fill="none"
+												viewBox="0 0 24 24"
+												stroke-width="1.5"
+												stroke="currentColor"
+												class="size-4"
+											>
+												<path
+													stroke-linecap="round"
+													stroke-linejoin="round"
+													d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25"
+												/>
+											</svg>
+
+											Import
+
+											<input
+												class="hidden"
+												type="file"
+												x-on:change="importContent($event)"
+											/>
+										</label>
+
+										<button
+											class="border border-black/50 rounded-md hover:bg-black/5 h-full px-3 cursor-pointer text-xs font-medium tracking-wide flex items-center gap-1.5 uppercase"
+											x-on:click="exportContent()"
+										>
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												fill="none"
+												viewBox="0 0 24 24"
+												stroke-width="1.5"
+												stroke="currentColor"
+												class="size-4"
+											>
+												<path
+													stroke-linecap="round"
+													stroke-linejoin="round"
+													d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15m0-3-3-3m0 0-3 3m3-3V15"
+												/>
+											</svg>
+
+											Export
+										</button>
+
+										<button
+											class="border border-black/50 rounded-md hover:bg-black/5 h-full px-3 cursor-pointer text-xs font-medium tracking-wide flex items-center gap-1.5 uppercase"
+											x-on:click="resetContent()"
+										>
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												fill="none"
+												viewBox="0 0 24 24"
+												stroke-width="1.5"
+												stroke="currentColor"
+												class="size-4"
+											>
+												<path
+													stroke-linecap="round"
+													stroke-linejoin="round"
+													d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
+												/>
+											</svg>
+
+											Reset
+										</button>
+									</div>
+								</div>
+
+								<div class="space-y-5">
+									<div>
+										<h3
+											class="col-span-2 text-sm font-bold uppercase tracking-wide text-primary mb-1"
+										>
+											Header
+										</h3>
+										<div class="grid grid-cols-4 gap-3">
+											<div class="sxl:col-span-2">
+												<label class="opacity-70"
+													>Groom</label
+												>
+												<input
+													type="text"
+													x-model="data.groom"
+												/>
+											</div>
+
+											<div class="sxl:col-span-2">
+												<label class="opacity-70"
+													>Bride</label
+												>
+												<input
+													type="text"
+													x-model="data.bride"
+												/>
+											</div>
+
+											<div class="sxl:col-span-2">
+												<label class="opacity-70"
+													>Date</label
+												>
+												<input
+													type="text"
+													x-model="data.date"
+												/>
+											</div>
+
+											<div class="sxl:col-span-2">
+												<label class="opacity-70"
+													>Bible verse</label
+												>
+												<input
+													type="text"
+													x-model="data.bibleVerse"
+												/>
+											</div>
+										</div>
+									</div>
+
+									<div>
+										<h3
+											class="col-span-2 text-sm font-bold uppercase tracking-wide text-primary mb-1"
+										>
+											Message
+										</h3>
+
+										<div class="grid grid-cols-3 gap-3">
+											<div>
+												<label class="opacity-70">
+													Salutation
+												</label>
+												<input
+													type="text"
+													x-model="data.salutation"
+												/>
+											</div>
+
+											<div class="col-span-3">
+												<label class="opacity-70">
+													Content
+												</label>
+												<textarea
+													type="text"
+													x-model="data.message"
+												>
+												</textarea>
+											</div>
+										</div>
+									</div>
+
+									<div>
+										<h3
+											class="col-span-2 text-sm font-bold uppercase tracking-wide text-primary mb-1"
+										>
+											Church
+										</h3>
+
+										<div class="grid grid-cols-2 gap-3">
+											<div>
+												<label class="opacity-70">
+													Label
+												</label>
+												<input
+													type="text"
+													x-model="data.church.label"
+												/>
+											</div>
+
+											<div>
+												<label class="opacity-70">
+													Time
+												</label>
+												<input
+													type="text"
+													x-model="data.church.time"
+												/>
+											</div>
+
+											<div class="col-span-2">
+												<label class="opacity-70">
+													Location
+												</label>
+												<textarea
+													x-model="data.church.location"
+												></textarea>
+											</div>
+										</div>
+									</div>
+
+									<div>
+										<h3
+											class="col-span-2 text-sm font-bold uppercase tracking-wide text-primary mb-1"
+										>
+											Reception
+										</h3>
+
+										<div class="grid grid-cols-2 gap-3">
+											<div>
+												<label class="opacity-70">
+													Label
+												</label>
+												<input
+													type="text"
+													x-model="data.reception.label"
+												/>
+											</div>
+
+											<div>
+												<label class="opacity-70">
+													Time
+												</label>
+												<input
+													type="text"
+													x-model="data.reception.time"
+												/>
+											</div>
+
+											<div class="col-span-2">
+												<label class="opacity-70">
+													Location
+												</label>
+												<textarea
+													x-model="data.reception.location"
+												></textarea>
+											</div>
+										</div>
+									</div>
+
+									<div>
+										<h3
+											class="col-span-2 text-sm font-bold uppercase tracking-wide text-primary mb-1"
+										>
+											Misc
+										</h3>
+
+										<div class="grid grid-cols-2 gap-3">
+											<div>
+												<label class="opacity-70"
+													>Tagline</label
+												>
+												<input
+													type="text"
+													x-model="data.tagline"
+												/>
+											</div>
+
+											<div>
+												<label class="opacity-70"
+													>RSVP Contacts Label</label
+												>
+												<input
+													type="text"
+													x-model="data.rsvpContactsLabel"
+												/>
+											</div>
+										</div>
+									</div>
+
+									<div class="pt-2">
+										<h3
+											class="col-span-2 text-sm font-bold uppercase tracking-wide text-primary mb-1"
+										>
+											RSVP Contacts
+										</h3>
+
+										<template
+											x-for="contact in data.rsvpContacts"
+										>
+											<div
+												class="pb-3 grid grid-cols-2 gap-3"
+											>
+												<div>
+													<label class="opacity-70">
+														Name
+													</label>
+													<input
+														type="text"
+														x-model="contact.name"
+													/>
+												</div>
+												<div>
+													<label class="opacity-70">
+														Phone
+													</label>
+													<input
+														type="text"
+														x-model="contact.phone"
+													/>
+												</div>
+											</div>
+										</template>
+									</div>
 								</div>
 							</div>
 						</div>
-					</template>
+					</div>
+				</div>
+
+				<div
+					id="cardList"
+					class="col-span-4"
+					x-bind:class="downloading ? 'py-8' : 'sticky top-24'"
+				>
+					<div class="flex justify-center flex-wrap gap-2">
+						<template x-for="user in users">
+							<div class="card-item" x-data="card()">
+								<div
+									class="relative rounded-xl overflow-hidden"
+									style="
+										width: 375px;
+										height: 667px;
+										padding: 0.35rem;
+										background: linear-gradient(
+											120deg,
+											var(--border-gradient-from) 0%,
+											var(--border-gradient-to) 100%
+										);
+									"
+								>
+									<div
+										class="bg-white h-full rounded-lg text-primary"
+									>
+										<div class="absolute inset-x-0 z-10">
+											<div
+												class="relative -mt-[95px] scale-[1.1]"
+											>
+												<svg
+													xmlns="http://www.w3.org/2000/svg"
+													viewBox="0 0 860.683 617.967"
+													fill="currentColor"
+												>
+													<defs>
+														<linearGradient
+															id="fillGradient"
+															gradientTransform="rotate(90)"
+														>
+															<stop
+																offset="5%"
+																style="
+																	stop-color: var(
+																		--gradient-from
+																	);
+																"
+															/>
+															<!-- stop-color="gold" -->
+															<!-- stop-color="red" -->
+															<stop
+																offset="95%"
+																style="
+																	stop-color: var(
+																		--gradient-to
+																	);
+																"
+															/>
+														</linearGradient>
+													</defs>
+
+													<path
+														fill="url(#fillGradient)"
+														d="M 860.683 69.286 C 812.716 44.077 854.974 425.877 835.944 498.995 C 816.914 571.109 740.794 625.195 671.684 617.182 C 601.573 609.169 537.472 540.06 415.284 500.998 C 294.087 461.936 114.804 451.92 59.716 379.806 C 3.627 306.69 -40.442 89.298 59.716 21.191 C 160.877 -47.923 862.151 74.612 860.683 69.286 Z"
+													/>
+												</svg>
+
+												<div
+													class="absolute inset-0 -bottom-16 invert opacity-10 sopacity-[0.03] rounded-full"
+													style="
+														rotate: 14deg;
+														left: -10px;
+														right: -60px;
+														top: -160px;
+														background-size: 150px;
+														background-image: url('img/waves.png');
+													"
+												></div>
+
+												<!-- <div
+													class="absolute inset-0 bg-cover sgrayscale"
+													style="
+														background-image: url('img/wedders.png');
+														mix-blend-mode: luminosity;
+													"
+												></div> -->
+											</div>
+										</div>
+
+										<div class="z-10 relative">
+											<div
+												class="relative flex py-1 items-center justify-between px-8 text-white tracking-widest"
+											>
+												<h5
+													class="relative mt-2 text-4xl text-centers great font-bold leading-tight"
+													style="
+														letter-spacing: 0.1em;
+													"
+												>
+													<span
+														class="great -ml-3"
+														x-text="data.groom"
+													>
+														Gilbert
+													</span>
+													<br />
+													<span
+														class="absolute mt-2 text-xs uppercase font-mono"
+													>
+														Weds
+													</span>
+													<span
+														class="ml-12 great"
+														x-text="data.bride"
+													>
+														Tausi
+													</span>
+												</h5>
+
+												<div
+													class="absolute top-6 -bottom-8 flex flex-col items-end justify-between right-4 text-right"
+												>
+													<span
+														class="shidden text-sm font-bold uppercase tracking-wide"
+														x-text="data.date"
+													>
+														28th September
+													</span>
+
+													<span
+														class="shidden text-sm font-light uppercases tracking-wide"
+														x-text="data.bibleVerse"
+													>
+														PROV 18:22
+													</span>
+												</div>
+											</div>
+										</div>
+
+										<div
+											class="absolute flex items-center top-0 left-0 ml-6 mt-[7.6rem] transform rotate-1"
+										>
+											<div class="mt-2">
+												<div id="qr"></div>
+											</div>
+
+											<div
+												class="mt-1 ml-3 text-black font-light text-[13px] flex flex-col gap-1.5"
+											>
+												<span>Smart Card</span>
+												<span
+													id="code"
+													class="font-semibold text-primary text-base/none tracking-widest"
+													x-text="user.code"
+												></span>
+											</div>
+										</div>
+
+										<div
+											class="pt-1 mt-24 px-4 text-center text-black text-opacity-75 leading-loose font-serif text-sm"
+										>
+											<span
+												x-text="data.salutation"
+											></span>
+											<span
+												class="font-serif mt-1 text- text-black font-medium"
+											>
+												<span
+													id="name"
+													class="font-serif font-medium"
+													x-text="user.name"
+												>
+												</span
+												>,
+											</span>
+
+											<span x-text="data.message"></span>
+										</div>
+
+										<img
+											class="mt-3 mb-2 w-40 mx-auto block"
+											src="img/wed-divider.svg"
+											alt=""
+										/>
+
+										<div
+											class="text-black bg-white mt-4 rounded-mds overflow-hidden relative"
+											styles="color: #41274a"
+										>
+											<div
+												class="absolute inset-0 bg-primary opacity-[0.1]"
+											></div>
+
+											<div
+												class="relative flex items-center text-primary"
+											>
+												<div
+													class="text-center absolute left-0 inset-y-0 flex flex-col justify-center items-center"
+													style="width: 93px"
+												>
+													<svg
+														class="absolute text-primary opacity-20"
+														fill="currentColor"
+														viewBox="0 0 200 200"
+														xmlns="http://www.w3.org/2000/svg"
+														style="
+															width: 350px;
+															left: -140px;
+															transform: rotate(
+																190deg
+															);
+														"
+													>
+														<path
+															d="M31.3,-46.7C32.7,-42.1,20.6,-22.4,19.5,-10C18.5,2.4,28.5,7.5,28.7,10C28.8,12.6,19.1,12.7,12.6,25.8C6.2,38.8,3.1,64.9,-7.4,75.2C-18,85.4,-36,79.8,-44.4,67.4C-52.8,55,-51.7,35.7,-47,22C-42.2,8.2,-33.8,0,-33.9,-14.5C-34,-28.9,-42.5,-49.6,-38.2,-53.2C-34,-56.9,-17,-43.6,-1,-42.2C15,-40.8,30,-51.3,31.3,-46.7Z"
+															transform="translate(100 100)"
+														/>
+													</svg>
+													<span
+														class="z-10 mt-2 leading-none great font-bold"
+														style="font-size: 65px"
+														x-text="user.type[0]"
+													></span>
+
+													<span
+														class="z-10 tracking-widest uppercase"
+														style="
+															font-family: Eudoras;
+															font-size: 14px;
+														"
+														x-text="user.type"
+													>
+													</span>
+												</div>
+
+												<div
+													class="pt-3 pb-4 flex-1 mr-4 mont text-right space-y-3"
+												>
+													<div class="-space-y-1">
+														<div
+															class="inline-flex items-center text-xs tracking-wide"
+														>
+															<span
+																x-text="data.church.label"
+															>
+																CHURCH
+															</span>
+															<span
+																style="
+																	padding-bottom: 0.1rem;
+																"
+																class="font-bold mx-1 leading-none"
+																>&middot;</span
+															>
+															<span
+																x-text="data.church.time"
+															>
+																10AM - NOON
+															</span>
+														</div>
+														<div
+															class="text-black/70 text-[13px]/[1.13]"
+															x-html="data.church.location"
+														>
+															KKKT Kibamba
+															Kibwegere
+														</div>
+													</div>
+
+													<div class="-space-y-1">
+														<div
+															class="inline-flex items-center text-xs tracking-wide"
+														>
+															<span
+																x-text="data.reception.label"
+															>
+																RECEPTION
+															</span>
+															<span
+																style="
+																	padding-bottom: 0.1rem;
+																"
+																class="font-bold mx-1 leading-none"
+																>&middot;</span
+															>
+															<span
+																x-text="data.reception.time"
+															>
+																1PM - 6PM
+															</span>
+														</div>
+														<div
+															class="text-black/70 text-[13px]/[1.13]"
+															x-html="data.reception.location"
+														>
+															Kibamba Kibwegere<br />
+															Bwawani ( Mtaa wa
+															Amani )
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<p
+											class="mt-5 px-6 text-black/75 text-xs font-light font-serif text-center"
+											x-html="data.tagline"
+										></p>
+
+										<div class="mt-4 mx-4">
+											<span
+												class="font-serif text-black text-xs font-medium tracking-wide"
+												x-text="data.rsvpContactsLabel"
+											>
+												RSVP CONTACTS
+											</span>
+											<div
+												style="
+													color: rgba(0, 0, 0, 0.6);
+												"
+											>
+												<template
+													x-for="contact in data.rsvpContacts"
+												>
+													<div>
+														<span
+															class="font-serif eading-none text-xs uppercase tracking-wide"
+															x-text="contact.name"
+														>
+														</span>
+														<span
+															class="font-serif leading-none text-sm"
+														>
+															&nbsp; (
+															<span
+																x-text="contact.phone"
+															></span>
+															)
+														</span>
+													</div>
+												</template>
+											</div>
+										</div>
+
+										<div
+											class="mt-3 ml-4 text-xs text-primary"
+										>
+											S/N:
+											<span
+												id="sn"
+												x-text="user.sn"
+											></span>
+
+											<span
+												class="text-black text-xs pl-1 opacity-40"
+											>
+												smart card by
+												<span class="mt-1 font-medium">
+													@ipfsoftwares
+												</span>
+											</span>
+										</div>
+									</div>
+
+									<div class="-m">
+										<img
+											class="z-10 absolute right-0 bottom-0 w-64 -mr-32 -mb-10 object-cover"
+											src="img/flowers.webp"
+											alt=""
+										/>
+									</div>
+								</div>
+							</div>
+						</template>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -1587,476 +2060,58 @@
 		<!-- <script src="scripts/easy.qrcode.min.js"></script> -->
 
 		<script>
-			const users = [
-				{
-					title: "",
-					name: "Elizabeth & Witson",
-					type: "Double",
-					sn: 100,
-					code: "276033",
+			const defaultTheme = {
+				color: "#95b85d",
+				background: ["#95b85d", "#749d45"],
+				border: ["#b3b85d", "#226271"],
+			};
+
+			const defaultData = {
+				groom: "Gilbert",
+				bride: "Tausi",
+				date: "28th September",
+				bibleVerse: "Prov 18:22",
+				salutation: "Dear",
+				message:
+					"the family of Mr. & Mrs. Sylvester Chando warmly invites you to come celebrate with us on this joyous occassion.",
+				// salutation: "Mpendwa",
+				// message:
+				// 	"familia ya Bw. & Bi. Sylvester Chando wanayo furaha kukukaribisha kujumuika nasi kwenye harusi ya watoto wetu wapendwa.",
+				church: {
+					label: "Church",
+					time: "10AM - NOON",
+					location: "KKKT Kibamba Kibwegere",
 				},
-				{
-					title: "",
-					name: "Deborah & Beatha",
-					type: "Double",
-					sn: 101,
-					code: "106834",
+				reception: {
+					label: "Reception",
+					time: "1PM - 6PM",
+					location:
+						"Kibamba Kibwegere<br />Bwawani ( Mtaa wa Amani )",
 				},
-				{
-					title: "",
-					name: "Stan Kayombo",
-					type: "Single",
-					sn: 102,
-					code: "843352",
-				},
-				{
-					title: "",
-					name: "Gaudensia & Lillian",
-					type: "Double",
-					sn: 103,
-					code: "346567",
-				},
-				{
-					title: "Mr. & Mrs",
-					name: "Gabriel Mushi",
-					type: "Double",
-					sn: 104,
-					code: "738041",
-				},
-				{
-					title: "Miss",
-					name: "Erna & Rose",
-					type: "Double",
-					sn: 105,
-					code: "148524",
-				},
-				{
-					title: "",
-					name: "Isaya & Klemy",
-					type: "Double",
-					sn: 106,
-					code: "420635",
-				},
-				{
-					title: "Miss",
-					name: "Rose & Abella",
-					type: "Double",
-					sn: 107,
-					code: "054422",
-				},
-				{
-					title: "",
-					name: "Fredy Malaki",
-					type: "Double",
-					sn: 108,
-					code: "531314",
-				},
-				{
-					title: "",
-					name: "Rachel Lyeme",
-					type: "Single",
-					sn: 109,
-					code: "714285",
-				},
-				{
-					title: "",
-					name: "Walter Kimaro",
-					type: "Double",
-					sn: 110,
-					code: "231530",
-				},
-				{
-					title: "Miss",
-					name: "Pamela & Juliana",
-					type: "Double",
-					sn: 111,
-					code: "633738",
-				},
-				{
-					title: "Mr. & Mrs",
-					name: "Godson Bigirwa",
-					type: "Double",
-					sn: 112,
-					code: "147586",
-				},
-				{
-					title: "Mr. & Mrs",
-					name: "Gilbert Kamara",
-					type: "Double",
-					sn: 113,
-					code: "483812",
-				},
-				{
-					title: "Mr. & Mrs",
-					name: "John Dismas",
-					type: "Double",
-					sn: 114,
-					code: "433288",
-				},
-				{
-					title: "",
-					name: "Godlove Malekela",
-					type: "Double",
-					sn: 115,
-					code: "431311",
-				},
-				{
-					title: "Miss",
-					name: "Karen & Emmy",
-					type: "Double",
-					sn: 116,
-					code: "155632",
-				},
-				{
-					title: "Mr. & Mrs",
-					name: "Ezra Murithians",
-					type: "Double",
-					sn: 117,
-					code: "346633",
-				},
-				{
-					title: "Mr. & Mrs",
-					name: "Charles Twalipo",
-					type: "Double",
-					sn: 118,
-					code: "220708",
-				},
-				{
-					title: "",
-					name: "Nelson & Subira",
-					type: "Double",
-					sn: 119,
-					code: "407862",
-				},
-				{
-					title: "",
-					name: "Jackson & Jessica",
-					type: "Double",
-					sn: 120,
-					code: "885718",
-				},
-				{
-					title: "",
-					name: "Angle E. Ruzika",
-					type: "Single",
-					sn: 121,
-					code: "035621",
-				},
-				{
-					title: "",
-					name: "Daniel Kisaka",
-					type: "Double",
-					sn: 122,
-					code: "803884",
-				},
-				{
-					title: "",
-					name: "Rehema & Ismail",
-					type: "Double",
-					sn: 123,
-					code: "860480",
-				},
-				{
-					title: "Mr. & Mrs",
-					name: "Godfrey Kingazi",
-					type: "Double",
-					sn: 124,
-					code: "763852",
-				},
-				{
-					title: "Mr. & Mrs",
-					name: "Mdoe",
-					type: "Double",
-					sn: 125,
-					code: "086662",
-				},
-				{
-					title: "",
-					name: "Felista Mauya",
-					type: "Double",
-					sn: 126,
-					code: "447065",
-				},
-				{
-					title: "Mr & Mrs",
-					name: "Samwel Msamala",
-					type: "Double",
-					sn: 127,
-					code: "038867",
-				},
-				{
-					title: "",
-					name: "John Mero",
-					type: "Double",
-					sn: 128,
-					code: "871243",
-				},
-				{
-					title: "Mr. &  Mrs",
-					name: "Kimaro",
-					type: "Double",
-					sn: 129,
-					code: "715423",
-				},
-				{
-					title: "",
-					name: "Herieth & Maria Mhina",
-					type: "Double",
-					sn: 130,
-					code: "317754",
-				},
-				{
-					title: "Mr. & Mrs",
-					name: "Jackson Shija D",
-					type: "Double",
-					sn: 131,
-					code: "280380",
-				},
-				{
-					title: "",
-					name: "Elinde Titus",
-					type: "Single",
-					sn: 132,
-					code: "661151",
-				},
-				{
-					title: "",
-					name: "Zawadi Mbwambo",
-					type: "Double",
-					sn: 133,
-					code: "531141",
-				},
-				{
-					title: "Mr. & Mrs",
-					name: "Eng  Zuberi Zahoro",
-					type: "Double",
-					sn: 134,
-					code: "666548",
-				},
-				{
-					title: "Mr. & Mrs",
-					name: "Eng Abdalah Hashimu",
-					type: "Double",
-					sn: 135,
-					code: "323277",
-				},
-				{
-					title: "Mr. & Mrs",
-					name: "Eng D  Shemangale",
-					type: "Double",
-					sn: 136,
-					code: "712058",
-				},
-				{
-					title: "Mr. & Mrs",
-					name: "Eng David  Shemangale",
-					type: "Double",
-					sn: 137,
-					code: "853355",
-				},
-				{
-					title: "",
-					name: "Kibwegere Fathers",
-					type: "Double",
-					sn: 138,
-					code: "531387",
-				},
-				{
-					title: "Mr. Mrs",
-					name: "Mgawe",
-					type: "Double",
-					sn: 139,
-					code: "348475",
-				},
-				{
-					title: "Mr. & Mrs",
-					name: "Justin Kiondo",
-					type: "Double",
-					sn: 140,
-					code: "247172",
-				},
-				{
-					title: "Mr. & Mrs",
-					name: "Fransis Kiondo",
-					type: "Double",
-					sn: 141,
-					code: "205031",
-				},
-				{
-					title: "Mr. & Mrs",
-					name: "Mosha",
-					type: "Double",
-					sn: 142,
-					code: "173731",
-				},
-				{
-					title: "",
-					name: "Dickson Mtalemwa",
-					type: "Double",
-					sn: 143,
-					code: "668127",
-				},
-				{
-					title: "Mrs",
-					name: "Titus",
-					type: "Single",
-					sn: 144,
-					code: "441560",
-				},
-				{
-					title: "",
-					name: "Nassar Kingazi",
-					type: "Single",
-					sn: 145,
-					code: "681686",
-				},
-				{
-					title: "",
-					name: "Witness Mwanga",
-					type: "Single",
-					sn: 146,
-					code: "818366",
-				},
-				{
-					title: "Mr. Mrs",
-					name: "Gidion Chando",
-					type: "Double",
-					sn: 147,
-					code: "241050",
-				},
-				{
-					title: "Mwl.",
-					name: "Lusiana Chando",
-					type: "Double",
-					sn: 148,
-					code: "205375",
-				},
-				{
-					title: "Mr. & Mrs",
-					name: "Msafiri Diliwa",
-					type: "Double",
-					sn: 149,
-					code: "776577",
-				},
-				{
-					title: "",
-					name: "Benjamini Msagati",
-					type: "Double",
-					sn: 150,
-					code: "860777",
-				},
-				{
-					title: "",
-					name: "Noel Kimaro",
-					type: "Double",
-					sn: 151,
-					code: "082576",
-				},
-				{
-					title: "Mr. & Mrs",
-					name: "O Luoga",
-					type: "Double",
-					sn: 152,
-					code: "423856",
-				},
-				{
-					title: "Mr. & Mrs",
-					name: "Kipandula",
-					type: "Double",
-					sn: 153,
-					code: "450587",
-				},
-				{
-					title: "",
-					name: "Emma Kimaro",
-					type: "Double",
-					sn: 154,
-					code: "756523",
-				},
-				{
-					title: "",
-					name: "Kimaro G",
-					type: "Double",
-					sn: 155,
-					code: "437076",
-				},
-				{
-					title: "",
-					name: "Mage",
-					type: "Double",
-					sn: 156,
-					code: "677710",
-				},
-				{
-					title: "",
-					name: "Glory",
-					type: "Double",
-					sn: 157,
-					code: "132368",
-				},
-				{
-					title: "",
-					name: "Rachel",
-					type: "Double",
-					sn: 158,
-					code: "518038",
-				},
-				{
-					title: "Mr. & Mrs",
-					name: "Eng Abdalah",
-					type: "Double",
-					sn: 159,
-					code: "316566",
-				},
-				{
-					title: "Mr. & Mrs",
-					name: "Eng Zuberi Zahoro",
-					type: "Double",
-					sn: 160,
-					code: "716255",
-				},
-			];
+				// tagline: "Children are loved but not invited.",
+				tagline: `Come in party decent wear with a shade of <span class="font-serif text-primary stext-white spx-0.5 font-bold">olive</span>`,
+				rsvpContactsLabel: "RSVP CONTACTS",
+				rsvpContacts: [
+					{ name: "Gidion Chando", phone: "0678 888 028" },
+					{ name: "Nelson Malekela", phone: "0714 907 734" },
+					{ name: "Jackson Twalipo", phone: "0767 188 777" },
+				],
+			};
 
 			function cards() {
 				return {
+					sheet: {
+						url: "https://docs.google.com/spreadsheets/d/11hOpvU8Ejjxit5rAl0SSEpNFYtFG6v_gmT2eukmrZXY/edit?gid=31541727",
+						// url: "https://docs.google.com/spreadsheets/d/1l95hysn_BceT0ICBXsfeNhbY49Uc2XcQ3SJ4mvBzWAY/edit?gid=1882959854",
+					},
+					mode: "design",
 					downloading: false,
 					searchQuery: "",
 					typeFilter: "",
 					allUsers: [],
-					theme: {
-						color: "#95b85d",
-						background: ["#95b85d", "#749d45"],
-						border: ["#b3b85d", "#226271"],
-					},
-					data: {
-						groom: "Gilbert",
-						bride: "Tausi",
-						date: "28th September",
-						bibleVerse: "Prov 18:22",
-						salutation: "Dear",
-						message:
-							"the family of Mr. & Mrs. Sylvester Chando warmly invites you to come celebrate with us on this joyous occassion.",
-						// salutation: "Mpendwa",
-						// message:
-						// 	"familia ya Bw. & Bi. Sylvester Chando wanayo furaha kukukaribisha kujumuika nasi kwenye harusi ya watoto wetu wapendwa.",
-						// tagline: `Come in party decent wear with a shade of <span class="font-serif text-primary stext-white spx-0.5 font-bold">olive</span>`,
-						tagline: "Children are loved but not invited.",
-						church: {
-							time: "10AM - NOON",
-							location: "KKKT Kibamba Kibwegere",
-						},
-						reception: {
-							time: "1PM - 6PM",
-							location:
-								"Kibamba Kibwegere<br />Bwawani ( Mtaa wa Amani )",
-						},
-						rsvpContacts: [
-							{ name: "Gidion Chando", phone: "0678 888 028" },
-							{ name: "Nelson Malekela", phone: "0714 907 734" },
-							{ name: "Jackson Twalipo", phone: "0767 188 777" },
-						],
-					},
-					get users() {
+					theme: defaultTheme,
+					data: defaultData,
+					get filteredUsers() {
 						return this.allUsers.filter((user) => {
 							if (this.typeFilter) {
 								if (user.type != this.typeFilter) return false;
@@ -2070,40 +2125,36 @@
 							return true;
 						});
 					},
-					init() {
-						let theme;
-						try {
-							this.theme = JSON.parse(
-								localStorage.cardGeneratorTheme
-							);
-						} catch (e) {}
-						this.$watch("theme", () => {
-							localStorage.cardGeneratorTheme = JSON.stringify(
-								this.theme
-							);
-						});
+					get columns() {
+						if (!this.allUsers) return [];
+						return Object.keys(this.allUsers[0]);
+					},
+					get users() {
+						// if (this.downloading) return this.allUsers;
+						if (this.downloading) return this.filteredUsers;
 
-						let data;
-						try {
-							this.data = JSON.parse(
-								localStorage.cardGeneratorData
-							);
-						} catch (e) {}
-						this.$watch("data", () => {
-							localStorage.cardGeneratorData = JSON.stringify(
-								this.data
-							);
-						});
-
-						let users = [];
-						try {
-							users = JSON.parse(localStorage.cardGeneratorUsers);
-						} catch (e) {}
-						this.allUsers = users;
-
-						const id =
-							"11hOpvU8Ejjxit5rAl0SSEpNFYtFG6v_gmT2eukmrZXY";
+						return this.filteredUsers.slice(0, 1);
+					},
+					async fetchUsers() {
+						// const id =
+						// 	"11hOpvU8Ejjxit5rAl0SSEpNFYtFG6v_gmT2eukmrZXY";
+						const id = this.sheet.url.match(/\/d\/(.+)\//)[1];
+						console.log(id);
 						const gid = "0";
+
+						var url = `https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:json&tq`;
+						fetch(url)
+							.then((response) => response.text())
+							.then((data) => {
+								// const res = JSON.parse(
+								// 	data.substring(47).slice(0, -2)
+								// );
+
+								console.log(
+									"Res: ",
+									data.substring(47).slice(0, -2)
+								);
+							});
 						var url = `https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:json&tq&gid=${gid}`;
 						fetch(url)
 							.then((response) => response.text())
@@ -2143,6 +2194,198 @@
 								this.allUsers = users;
 							});
 					},
+					init() {
+						try {
+							const mode = localStorage.cardGeneratorMode;
+							if (mode) this.mode = mode;
+						} catch (e) {}
+
+						this.$watch("mode", () => {
+							localStorage.cardGeneratorMode = this.mode;
+						});
+
+						try {
+							const theme = JSON.parse(
+								localStorage.cardGeneratorTheme
+							);
+							if (theme) {
+								this.theme = {
+									...this.theme,
+									...theme,
+								};
+							}
+						} catch (e) {}
+
+						this.$watch("theme", () => {
+							localStorage.cardGeneratorTheme = JSON.stringify(
+								this.theme
+							);
+						});
+
+						try {
+							const data = JSON.parse(
+								localStorage.cardGeneratorData
+							);
+							if (data) {
+								this.data = {
+									...this.data,
+									...data,
+									church: {
+										...this.data.church,
+										...data.church,
+									},
+									reception: {
+										...this.data.reception,
+										...data.reception,
+									},
+								};
+							}
+						} catch (e) {}
+						this.$watch("data", () => {
+							localStorage.cardGeneratorData = JSON.stringify(
+								this.data
+							);
+						});
+
+						let users = [];
+						try {
+							users = JSON.parse(localStorage.cardGeneratorUsers);
+						} catch (e) {}
+						this.allUsers = users;
+
+						// if (!users.length) this.fetchUsers();
+						this.fetchUsers();
+					},
+					async importFile(e, endsWith) {
+						if (!e?.target?.files?.length) return;
+
+						let contents;
+
+						const file = e.target.files[0];
+						if (!file.name.endsWith(endsWith)) {
+							alert("Invalid file");
+							return null;
+						}
+
+						try {
+							contents = JSON.parse(await this.readFile(file));
+						} catch (error) {
+							console.log("Import error: ", error);
+							alert("Invalid file");
+							return null;
+						}
+
+						e.target.value = null;
+
+						return contents;
+					},
+					async importTheme(e) {
+						const theme = await this.importFile(e, "kaditheme");
+						if (!theme) return;
+						this.theme = theme;
+					},
+					exportTheme: function () {
+						this.downloadObject(
+							this.theme,
+							`${[this.data.groom, this.data.bride]
+								.join("")
+								.replaceAll(" ", "")}.kaditheme`
+						);
+					},
+					resetTheme: function () {
+						this.theme = defaultTheme;
+					},
+					async importContent(e) {
+						const contents = await this.importFile(
+							e,
+							"kadicontent"
+						);
+
+						if (!contents) return;
+
+						this.data = contents;
+					},
+					exportContent: function () {
+						this.downloadObject(
+							this.data,
+							`${[this.data.groom, this.data.bride]
+								.join("")
+								.replaceAll(" ", "")}.kadicontent`
+						);
+					},
+					resetContent: function () {
+						this.data = defaultData;
+					},
+					readFile: function (file) {
+						return new Promise((resolve, reject) => {
+							const reader = new FileReader();
+							reader.onload = function (evt) {
+								resolve(evt.target.result);
+							};
+							reader.readAsText(file);
+						});
+					},
+					download: async function (url, fileName = "text.txt") {
+						var link = document.createElement("a");
+						link.setAttribute("download", fileName);
+						link.setAttribute("href", url);
+						link.setAttribute("target", "_blank");
+						link.click();
+						link.remove();
+					},
+					downloadObject: async function (
+						contents,
+						fileName = "download.json"
+					) {
+						this.download(
+							URL.createObjectURL(
+								new Blob([JSON.stringify(contents)], {
+									type: "application/json",
+								})
+							),
+							fileName
+						);
+					},
+					downloadCards: async function () {
+						// window.dispatchEvent(
+						// 	new CustomEvent("downloading-cards")
+						// );
+
+						// const cards = await Promise.all(
+						// 	Array.from(
+						// 		document.querySelectorAll(".card-item")
+						// 	).map((card) =>
+						// 		getCardImage(
+						// 			card,
+						// 			[
+						// 				card.querySelector("#sn").textContent,
+						// 				card.querySelector("#name").textContent,
+						// 			].join(" ")
+						// 			// card.getAttribute("data-file-name")
+						// 		)
+						// 	)
+						// );
+
+						// const card = document.createElement("div");
+						// const list = document.querySelector("#cardList");
+						// list.innerHTML = "";
+						// document.querySelector("#cardList").appendChild(card);
+
+						// return console.log("Cards: ", cards);
+
+						// const blob = await downloadZip(cards).blob();
+						// const link = document.createElement("a");
+
+						// link.href = URL.createObjectURL(blob);
+						// link.download = "cards.zip";
+						// link.click();
+						// link.remove();
+
+						// window.dispatchEvent(
+						// 	new CustomEvent("cards-downloaded")
+						// );
+						window.downloadCards();
+					},
 				};
 			}
 
@@ -2181,6 +2424,7 @@
 		<script type="module" async>
 			import { downloadZip } from "https://cdn.jsdelivr.net/npm/client-zip/index.js";
 			// import { downloadZip } from "./scripts/client-zip.min.js";
+			window.downloadZip = downloadZip;
 
 			async function getCardImage(card, name) {
 				const scale = 2;
@@ -2209,6 +2453,10 @@
 
 			window.downloadCards = async function () {
 				window.dispatchEvent(new CustomEvent("downloading-cards"));
+
+				await { then: (res) => setTimeout(res, 200) };
+
+				console.log("Download");
 
 				const cards = await Promise.all(
 					Array.from(document.querySelectorAll(".card-item")).map(
