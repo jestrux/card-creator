@@ -6,16 +6,8 @@
 		<link rel="icon" href="favicon.ico" sizes="any" />
 		<link rel="apple-touch-icon" href="img/icons/icon-192-maskable.png" />
 
-		<meta
-			name="theme-color"
-			content="#FFFFFF"
-			media="(prefers-color-scheme: light)"
-		/>
-		<meta
-			name="theme-color"
-			content="#252525"
-			media="(prefers-color-scheme: dark)"
-		/>
+		<meta name="theme-color" content="#FFFFFF" />
+
 		<meta name="description" content="Wedding card generator" />
 		<link rel="manifest" href="manifest.json" />
 
@@ -901,7 +893,7 @@
 				</div>
 
 				<div
-					class="h-10 inline-flex items-center rounded-md overflow-hidden border divide-x divide-black/20 border-black/20"
+					class="h-10 hidden lg:inline-flex items-center rounded-md overflow-hidden border divide-x divide-black/20 border-black/20"
 				>
 					<label
 						class="bg-primary text-white h-full w-24 cursor-pointer text-xs font-medium tracking-wide flex items-center justify-center uppercase"
@@ -948,6 +940,26 @@
 						Design
 					</label>
 				</div>
+
+				<button
+					onclick="shareCard()"
+					class="ml-auto gap-2 lg:hidden flex items-center justify-center w-10 lg:w-[220px] lg:px-4 h-10 uppercase text-xs lg:text-sm tracking-wide font-semibold bg-white text-black border border-black/30 rounded-full focus:outline-none"
+				>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+						stroke="currentColor"
+						class="size-5"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z"
+						/>
+					</svg>
+				</button>
 
 				<button
 					onclick="downloadCards()"
@@ -1033,9 +1045,67 @@
 
 		<div x-cloak x-show="allUsers.length">
 			<div
-				class="lg:grid grid-cols-12 gap-8 items-start h-full container mx-auto"
+				class="pb-6 lg:pb-0 lg:grid grid-cols-12 gap-8 items-start h-full container mx-auto"
 			>
-				<div class="col-span-8 border-r pl-0 lg:pr-8 py-6 lg:py-8">
+				<div class="lg:hidden p-2 border-b mb-3">
+					<div
+						class="flex items-center flex-wrap gap-3 justify-between"
+					>
+						<div
+							class="h-9 inline-flex items-center rounded-md overflow-hidden border divide-x divide-black/20 border-black/20"
+						>
+							<label
+								class="bg-primary text-white h-full px-2 cursor-pointer text-sm font-medium tracking-wide flex items-center"
+								x-bind:class="!typeFilter ? 'bg-primary text-white ' : 'bg-transparent !text-black/50'"
+								x-on:click="typeFilter = ''"
+							>
+								All
+							</label>
+							<label
+								class="h-full px-2 cursor-pointer text-sm font-medium tracking-wide flex items-center"
+								x-bind:class="typeFilter == 'Single' ? 'bg-primary text-white ' : 'text-black/50'"
+								x-on:click="typeFilter = 'Single'"
+							>
+								Sngl
+							</label>
+							<label
+								class="h-full px-2 cursor-pointer text-sm font-medium tracking-wide flex items-center"
+								x-bind:class="typeFilter == 'Double' ? 'bg-primary text-white ' : 'text-black/50'"
+								x-on:click="typeFilter = 'Double'"
+							>
+								Dbl
+							</label>
+						</div>
+
+						<div class="relative flex-1">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke-width="1.5"
+								stroke="currentColor"
+								class="size-5 absolute inset-y-0 my-auto left-3 opacity-50 pointer-events-none"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+								/>
+							</svg>
+
+							<input
+								type="search"
+								placeholder="Type to search..."
+								x-model="searchQuery"
+								class="pl-10 bg-black/[0.03]"
+							/>
+						</div>
+					</div>
+				</div>
+
+				<div
+					class="hidden lg:block col-span-8 border-r pl-0 lg:pr-8 py-6 lg:py-8"
+				>
 					<div x-show="mode == 'data'" class="lg:min-h-screen">
 						<!-- <h3 class="text-xl/none font-semibold">Attendees</h3> -->
 
@@ -2142,19 +2212,19 @@
 						console.log(id);
 						const gid = "0";
 
-						var url = `https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:json&tq`;
-						fetch(url)
-							.then((response) => response.text())
-							.then((data) => {
-								// const res = JSON.parse(
-								// 	data.substring(47).slice(0, -2)
-								// );
+						// var url = `https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:json&tq`;
+						// fetch(url)
+						// 	.then((response) => response.text())
+						// 	.then((data) => {
+						// 		// const res = JSON.parse(
+						// 		// 	data.substring(47).slice(0, -2)
+						// 		// );
 
-								console.log(
-									"Res: ",
-									data.substring(47).slice(0, -2)
-								);
-							});
+						// 		console.log(
+						// 			"Res: ",
+						// 			data.substring(47).slice(0, -2)
+						// 		);
+						// 	});
 						var url = `https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:json&tq&gid=${gid}`;
 						fetch(url)
 							.then((response) => response.text())
@@ -2450,6 +2520,38 @@
 					input: blob,
 				};
 			}
+
+			window.shareCard = async function () {
+				const cards = document.querySelectorAll(".card-item");
+				if (!cards.length) return;
+
+				const card = await getCardImage(
+					cards[0],
+					[
+						cards[0].querySelector("#sn").textContent,
+						cards[0].querySelector("#name").textContent,
+					].join(" ")
+				);
+
+				try {
+					const file = new File([card.input], card.name, {
+						type: "image/png",
+					});
+
+					if (navigator.share && navigator.canShare) {
+						await navigator.share({ files: [file] });
+						console.log("Share was successful.");
+					} else {
+						const link = document.createElement("a");
+						link.href = URL.createObjectURL(card.input);
+						link.download = card.name;
+						link.click();
+						link.remove();
+					}
+				} catch (error) {
+					console.log("Sharing failed", error);
+				}
+			};
 
 			window.downloadCards = async function () {
 				window.dispatchEvent(new CustomEvent("downloading-cards"));
